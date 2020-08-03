@@ -4,6 +4,7 @@
   "description": "Serverless Plugin for AWS Lambdas Provisioned Concurrency Auto Scaling configuration.",
   "main": "./lib/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\""
   },
   "repository": {

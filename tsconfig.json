@@ -16,8 +16,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true
   },
-  "exclude": ["node_modules"],
-  "include": ["./src/**/*", "vendor/**/*", "node_modules/serverless-types/**/*"]
+  "include": ["src/**/*", "vendor/**/*", "node_modules/serverless-types/**/*"]
 }
