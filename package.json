@@ -1,0 +1,43 @@
+{
+  "name": "serverless-provisioned-concurrency-autoscaling",
+  "version": "0.0.1",
+  "description": "Serverless Plugin for AWS Lambdas Provisioned Concurrency Auto Scaling configuration.",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling.git"
+  },
+  "keywords": [
+    "serverless",
+    "sls",
+    "plugin",
+    "provisioned",
+    "concurrency",
+    "provisioned concurrency",
+    "cloudformation",
+    "autoscaling",
+    "auto-scaling",
+    "amazon",
+    "aws",
+    "typescript"
+  ],
+  "author": "Clay Danford <crd013@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/issues"
+  },
+  "homepage": "https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling#readme",
+  "devDependencies": {
+    "@types/lodash": "^4.14.158",
+    "@types/md5": "^2.2.0",
+    "@types/node": "^14.0.27",
+    "serverless-types": "0.0.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.19",
+    "md5": "^2.2.1"
+  }
+}
