@@ -4,7 +4,7 @@
 
 [![verson](https://img.shields.io/github/v/release/neiman-marcus/serverless-provisioned-concurrency-autoscaling)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/releases/latest) [![build](https://img.shields.io/github/workflow/status/neiman-marcus/serverless-provisioned-concurrency-autoscaling/tf-lint)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/actions?query=workflow%3Atf-lint) [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/blob/master/LICENSE) [![pr](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/blob/master/CONTRIBUTING.md)
 
-Serverless Plugin for AWS Lambdas Provisioned Concurrency Auto Scaling configuration.
+Serverless Plugin for AWS Lambda Provisioned Concurrency Auto Scaling configuration.
 
 ## Usage
 
