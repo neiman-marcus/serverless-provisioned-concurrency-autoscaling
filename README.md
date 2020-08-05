@@ -6,6 +6,66 @@
 
 Serverless Plugin for AWS Lambdas Provisioned Concurrency Auto Scaling configuration.
 
+## Usage
+
+Add the [NPM package](https://www.npmjs.com/package/serverless-provisioned-concurrency-autoscaling) to your project:
+
+```bash
+$ npm install serverless-dynamodb-autoscaling
+```
+
+Add the plugin to your `serverless.yml`:
+
+```yaml
+plugins:
+  - serverless-provisioned-concurrency-autoscaling
+```
+
+## Configuration
+
+Add `concurrencyAutoscaling` parameters under each function you wish to autoscale in your `serverless.yml`.
+
+```yaml
+# minimal configuration
+
+functions:
+  hello:
+    handler: handler.hello
+    provisionedConcurrency: 1
+    concurrencyAutoscaling: true
+
+  # full configuration
+
+  world:
+    handler: handler.world
+    provisionedConcurrency: 1
+    concurrencyAutoscaling:
+      enabled: true
+      maximum: 10
+      minimum: 1
+      usage: 0.75
+      scaleInCooldown: 120
+      scaleOutCooldown: 0
+```
+
+That's it! With the next deployment, [serverless](https://serverless.com) will add Cloudformation resources to scale provisioned concurrency!
+
+You must provide atleast `provisionedConcurrency` and `concurrencyAutoscaling` to enable autoscaling. Set `concurrencyAutoscaling` to a boolean, or object with configuration.
+
+### Defaults
+
+```yaml
+maximum: 10
+minimum: 1
+usage: 0.75
+scaleInCooldown: 120
+scaleOutCooldown: 0
+```
+
+## Known Issues/Limitations
+
+N/A
+
 ## Authors
 
 - [Clay Danford](mailto:crd013@gmail.com)
