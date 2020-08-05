@@ -6,7 +6,7 @@ export default class Target extends Resource {
   private readonly roleArn =
     'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency'
 
-  constructor(options: Options, private data: Configuration) {
+  constructor(options: Options, private data: autoscalingConfig) {
     super(options)
   }
 
