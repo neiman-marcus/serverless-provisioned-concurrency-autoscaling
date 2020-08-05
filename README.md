@@ -11,7 +11,7 @@ Serverless Plugin for AWS Lambdas Provisioned Concurrency Auto Scaling configura
 Add the [NPM package](https://www.npmjs.com/package/serverless-provisioned-concurrency-autoscaling) to your project:
 
 ```bash
-$ npm install serverless-dynamodb-autoscaling
+$ npm install serverless-provisioned-concurrency-autoscaling
 ```
 
 Add the plugin to your `serverless.yml`:
