@@ -124,9 +124,16 @@ class AWSPCAutoScaling {
 
       if (!instance.provisionedConcurrency) return
       if (!instance.concurrencyAutoscaling) return
-      if (!instance.concurrencyAutoscaling) {
+      if (
+        typeof instance.concurrencyAutoscaling === 'boolean' &&
+        instance.concurrencyAutoscaling !== true
+      )
+        return
+      if (typeof instance.concurrencyAutoscaling === 'object') {
         if (!('enabled' in instance.concurrencyAutoscaling)) return
+        if (instance.concurrencyAutoscaling.enabled !== true) return
       }
+
       pcFunctions.push({
         function: functionName,
         ...instance.concurrencyAutoscaling,
