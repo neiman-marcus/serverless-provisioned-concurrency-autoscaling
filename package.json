@@ -4,8 +4,7 @@
   "description": "Serverless Plugin for AWS Lambdas Provisioned Concurrency Auto Scaling configuration.",
   "main": "./lib/index.js",
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\""
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -35,7 +34,9 @@
     "@types/lodash": "^4.14.158",
     "@types/md5": "^2.2.0",
     "@types/node": "^14.0.27",
-    "@types/serverless": "^1.72.5"
+    "@types/serverless": "^1.72.5",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "lodash": "^4.17.19",
