@@ -1,4 +1,4 @@
-![logo](https://github.com/neiman-marcus/terraform-aws-jenkins-ha-agents/raw/master/images/logo.png 'Neiman Marcus')
+![logo](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/raw/master/images/logo-small.png 'Neiman Marcus')
 
 # ⚡️ serverless-provisioned-concurrency-autoscaling
 
