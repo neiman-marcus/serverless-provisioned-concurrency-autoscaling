@@ -1,21 +1,19 @@
-import Resource from './resource'
+import Name from '../name'
 
-export default class Target extends Resource {
+export default class Target {
   data: AutoscalingConfig
-
-  readonly type = 'AWS::ApplicationAutoScaling::ScalableTarget'
-
-  readonly roleArn =
-    'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency'
+  options: Options
+  dependencies: any[]
+  name: any
 
   constructor(options: Options, data: AutoscalingConfig) {
-    super(options)
+    this.options = options
     this.data = data
+    this.dependencies = []
+    this.name = new Name(options)
   }
 
   toJSON(): any {
-    let resource = `function:${this.data.name}:provisioned`
-
     const nameTarget = this.name.target(this.data.function)
 
     const DependsOn = [this.name.PCAliasLogicalId(this.data.function)].concat(
@@ -28,12 +26,15 @@ export default class Target extends Resource {
         Properties: {
           MaxCapacity: this.data.maximum,
           MinCapacity: this.data.minimum,
-          ResourceId: resource,
-          RoleARN: { 'Fn::Sub': this.roleArn },
+          ResourceId: `function:${this.data.name}:provisioned`,
           ScalableDimension: 'lambda:function:ProvisionedConcurrency',
           ServiceNamespace: 'lambda',
+          RoleARN: {
+            'Fn::Sub':
+              'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
+          },
         },
-        Type: this.type,
+        Type: 'AWS::ApplicationAutoScaling::ScalableTarget',
       },
     }
   }

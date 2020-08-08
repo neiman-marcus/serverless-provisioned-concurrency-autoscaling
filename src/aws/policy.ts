@@ -1,13 +1,16 @@
-import Resource from './resource'
+import Name from '../name'
 
-export default class Policy extends Resource {
+export default class Policy {
   data: AutoscalingConfig
-
-  readonly type: string = 'AWS::ApplicationAutoScaling::ScalingPolicy'
+  options: Options
+  name: any
+  dependencies: any[]
 
   constructor(options: Options, data: AutoscalingConfig) {
-    super(options)
+    this.options = options
     this.data = data
+    this.dependencies = []
+    this.name = new Name(options)
   }
 
   toJSON(): any {
@@ -19,7 +22,7 @@ export default class Policy extends Resource {
       [PolicyName]: {
         DependsOn,
         Properties: {
-          PolicyName,
+          PolicyName: this.name.policy(this.data.function),
           PolicyType: 'TargetTrackingScaling',
           ScalingTargetId: { Ref: Target },
           TargetTrackingScalingPolicyConfiguration: {
@@ -31,7 +34,7 @@ export default class Policy extends Resource {
             TargetValue: this.data.usage,
           },
         },
-        Type: this.type,
+        Type: 'AWS::ApplicationAutoScaling::ScalingPolicy',
       },
     }
   }
