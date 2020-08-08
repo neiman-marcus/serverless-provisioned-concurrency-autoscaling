@@ -1,8 +1,6 @@
-declare interface autoscalingConfig extends Config {
+declare interface AutoscalingConfig {
   function: string
-}
-
-declare interface Config {
+  name: string
   maximum?: number
   minimum?: number
   usage?: number

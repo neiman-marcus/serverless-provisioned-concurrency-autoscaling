@@ -6,12 +6,12 @@ export default class Target extends Resource {
   private readonly roleArn =
     'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency'
 
-  constructor(options: Options, private data: autoscalingConfig) {
+  constructor(options: Options, private data: AutoscalingConfig) {
     super(options)
   }
 
   public toJSON(): any {
-    const resource = `function:${this.options.service}-${this.options.stage}-${this.data.function}:provisioned` // TODO extend this to use custom names
+    let resource = `function:${this.data.name}:provisioned`
 
     const nameTarget = this.name.target(this.data.function)
 

@@ -54,7 +54,7 @@ export default class Plugin {
   }
 
   // Parse Config and fill up with default values when needed
-  private defaults(config: autoscalingConfig): autoscalingConfig {
+  private defaults(config: AutoscalingConfig): AutoscalingConfig {
     return {
       maximum: config.maximum || 10,
       minimum: config.minimum || 1,
@@ -62,11 +62,12 @@ export default class Plugin {
       scaleOutCooldown: config.scaleOutCooldown || 0,
       usage: config.usage || 0.75,
       function: config.function,
+      name: config.name,
     }
   }
 
   // Create CloudFormation resources for lambda
-  private resources(config: autoscalingConfig): any[] {
+  private resources(config: AutoscalingConfig): any[] {
     const data = this.defaults(config)
 
     const options: Options = {
@@ -87,12 +88,12 @@ export default class Plugin {
   }
 
   // Create Policy and Target resource
-  private getPolicyAndTarget(options: Options, data: autoscalingConfig): any[] {
+  private getPolicyAndTarget(options: Options, data: AutoscalingConfig): any[] {
     return [new Policy(options, data), new Target(options, data)]
   }
 
   // Generate CloudFormation resources for lambda provisioned concurrency
-  private generate(config: autoscalingConfig) {
+  private generate(config: AutoscalingConfig) {
     let resources: any[] = []
     let lastRessources: any[] = []
 
@@ -125,6 +126,7 @@ export default class Plugin {
       if (this.validateFunctions(instance)) {
         return {
           function: functionName,
+          name: instance.name,
           ...instance.concurrencyAutoscaling,
         }
       }
@@ -132,8 +134,8 @@ export default class Plugin {
   }
 
   // Process the provided Config
-  private process(pcFunctions: autoscalingConfig[]) {
-    pcFunctions.forEach((config: autoscalingConfig) =>
+  private process(pcFunctions: AutoscalingConfig[]) {
+    pcFunctions.forEach((config: AutoscalingConfig) =>
       this.generate(config).forEach((resource: string) =>
         _.merge(
           this.serverless.service.provider.compiledCloudFormationTemplate
