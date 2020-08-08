@@ -17,31 +17,34 @@ const text = {
 }
 
 export default class Plugin {
-  public hooks: {}
+  serverless: Serverless
+  hooks: {}
 
-  constructor(private serverless: Serverless) {
+  constructor(serverless: Serverless) {
+    this.serverless = serverless
+
     this.hooks = {
       'package:compileEvents': this.beforeDeployResources.bind(this),
     }
   }
 
   // Get the current stage name
-  private getStage(): string {
+  getStage(): string {
     return this.serverless.getProvider('aws').getStage()
   }
 
   // Get the current service name
-  private getServiceName(): string {
+  getServiceName(): string {
     return this.serverless.service.getServiceName()
   }
 
   // Get the current service region
-  private getRegion(): string {
+  getRegion(): string {
     return this.serverless.getProvider('aws').getRegion()
   }
 
   // Validate request and check if Config is available
-  private validate(pcFunctions: any[]): void {
+  validate(pcFunctions: any[]): void {
     assert(this.serverless, text.INVALID_CONFIG)
     assert(this.serverless.service, text.INVALID_CONFIG)
     assert(this.serverless.service.provider, text.INVALID_CONFIG)
@@ -54,7 +57,7 @@ export default class Plugin {
   }
 
   // Parse Config and fill up with default values when needed
-  private defaults(config: AutoscalingConfig): AutoscalingConfig {
+  defaults(config: AutoscalingConfig): AutoscalingConfig {
     return {
       maximum: config.maximum || 10,
       minimum: config.minimum || 1,
@@ -67,7 +70,7 @@ export default class Plugin {
   }
 
   // Create CloudFormation resources for lambda
-  private resources(config: AutoscalingConfig): any[] {
+  resources(config: AutoscalingConfig): any[] {
     const data = this.defaults(config)
 
     const options: Options = {
@@ -88,12 +91,12 @@ export default class Plugin {
   }
 
   // Create Policy and Target resource
-  private getPolicyAndTarget(options: Options, data: AutoscalingConfig): any[] {
+  getPolicyAndTarget(options: Options, data: AutoscalingConfig): any[] {
     return [new Policy(options, data), new Target(options, data)]
   }
 
   // Generate CloudFormation resources for lambda provisioned concurrency
-  private generate(config: AutoscalingConfig) {
+  generate(config: AutoscalingConfig) {
     let resources: any[] = []
     let lastRessources: any[] = []
 
@@ -107,7 +110,7 @@ export default class Plugin {
   }
 
   // validate function config is correct
-  private validateFunctions(instance: any) {
+  validateFunctions(instance: any) {
     return (
       instance.provisionedConcurrency &&
       instance.concurrencyAutoscaling &&
@@ -119,7 +122,7 @@ export default class Plugin {
   }
 
   // Get all functions with function config
-  private getFunctions() {
+  getFunctions() {
     return this.serverless.service.getAllFunctions().map((functionName) => {
       const instance: any = this.serverless.service.getFunction(functionName)
 
@@ -134,7 +137,7 @@ export default class Plugin {
   }
 
   // Process the provided Config
-  private process(pcFunctions: AutoscalingConfig[]) {
+  process(pcFunctions: AutoscalingConfig[]) {
     pcFunctions.forEach((config: AutoscalingConfig) =>
       this.generate(config).forEach((resource: string) =>
         _.merge(
@@ -146,8 +149,9 @@ export default class Plugin {
     )
   }
 
-  private async beforeDeployResources(): Promise<any> {
+  async beforeDeployResources(): Promise<any> {
     try {
+      await Promise.resolve()
       const pcFunctions = this.getFunctions()
       this.validate(pcFunctions)
       this.serverless.cli.log(util.format(text.CLI_START))

@@ -8,7 +8,7 @@ export default class Resource {
     this.name = new Name(options)
   }
 
-  public setDependencies(list: string[]): Resource {
+  setDependencies(list: string[]): Resource {
     this.dependencies = list
 
     return this

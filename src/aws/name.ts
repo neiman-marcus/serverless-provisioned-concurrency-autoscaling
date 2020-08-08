@@ -16,31 +16,34 @@ const truncate = (input: string): string =>
 const ucfirst = (data: string): string => `${_.upperFirst(data)}`
 
 export default class Name {
-  constructor(private options: Options) {}
+  options: Options
+  constructor(options: Options) {
+    this.options = options
+  }
 
-  public target(func: string): string {
+  target(func: string): string {
     return clean(this.build(TEXT.TARGET, func))
   }
 
-  public policy(func: string): string {
+  policy(func: string): string {
     return clean(this.build(TEXT.POLICYSCALE, func))
   }
 
-  public PCAliasLogicalId(functionName: any) {
+  PCAliasLogicalId(functionName: any) {
     return `${this.normalizedFunctionName(functionName)}ProvConcLambdaAlias`
   }
 
-  private normalizedFunctionName(functionName: string) {
+  normalizedFunctionName(functionName: string) {
     return ucfirst(
       functionName.replace(/-/g, 'Dash').replace(/_/g, 'Underscore'),
     )
   }
 
-  private build(data: string, ...args: string[]): string {
+  build(data: string, ...args: string[]): string {
     return [args ? util.format(data, ...args) : data, this.suffix()].join('')
   }
 
-  private suffix(): string {
+  suffix(): string {
     return [this.options.stage, this.options.region].map(ucfirst).join('')
   }
 }

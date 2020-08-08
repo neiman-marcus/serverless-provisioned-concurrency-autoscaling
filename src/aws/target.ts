@@ -1,16 +1,19 @@
 import Resource from './resource'
 
 export default class Target extends Resource {
-  private readonly type = 'AWS::ApplicationAutoScaling::ScalableTarget'
+  data: AutoscalingConfig
 
-  private readonly roleArn =
+  readonly type = 'AWS::ApplicationAutoScaling::ScalableTarget'
+
+  readonly roleArn =
     'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency'
 
-  constructor(options: Options, private data: AutoscalingConfig) {
+  constructor(options: Options, data: AutoscalingConfig) {
     super(options)
+    this.data = data
   }
 
-  public toJSON(): any {
+  toJSON(): any {
     let resource = `function:${this.data.name}:provisioned`
 
     const nameTarget = this.name.target(this.data.function)

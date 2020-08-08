@@ -1,13 +1,16 @@
 import Resource from './resource'
 
 export default class Policy extends Resource {
-  private readonly type: string = 'AWS::ApplicationAutoScaling::ScalingPolicy'
+  data: AutoscalingConfig
 
-  constructor(options: Options, private data: AutoscalingConfig) {
+  readonly type: string = 'AWS::ApplicationAutoScaling::ScalingPolicy'
+
+  constructor(options: Options, data: AutoscalingConfig) {
     super(options)
+    this.data = data
   }
 
-  public toJSON(): any {
+  toJSON(): any {
     const PolicyName = this.name.policy(this.data.function)
     const Target = this.name.target(this.data.function)
     const DependsOn = [Target].concat(this.dependencies)
