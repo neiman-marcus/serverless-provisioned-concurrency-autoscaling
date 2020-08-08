@@ -1,8 +1,8 @@
-![logo](https://github.com/neiman-marcus/terraform-aws-jenkins-ha-agents/raw/master/images/logo.png 'Neiman Marcus')
+![logo](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/raw/master/images/logo-small.png 'Neiman Marcus')
 
 # ⚡️ serverless-provisioned-concurrency-autoscaling
 
-[![verson](https://img.shields.io/github/v/release/neiman-marcus/serverless-provisioned-concurrency-autoscaling)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/releases/latest) [![build](https://img.shields.io/github/workflow/status/neiman-marcus/serverless-provisioned-concurrency-autoscaling/tf-lint)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/actions?query=workflow%3Atf-lint) [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/blob/master/LICENSE) [![pr](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/blob/master/CONTRIBUTING.md)
+[![npm](https://img.shields.io/npm/v/serverless-provisioned-concurrency-autoscaling)](https://www.npmjs.com/package/serverless-provisioned-concurrency-autoscaling) [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/blob/master/LICENSE) [![pr](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/blob/master/CONTRIBUTING.md)
 
 Serverless Plugin for AWS Lambda Provisioned Concurrency Auto Scaling configuration.
 
@@ -50,7 +50,7 @@ functions:
 
 That's it! With the next deployment, [serverless](https://serverless.com) will add Cloudformation resources to scale provisioned concurrency!
 
-You must provide atleast `provisionedConcurrency` and `concurrencyAutoscaling` to enable autoscaling. Set `concurrencyAutoscaling` to a boolean, or object with configuration.
+You must provide atleast `provisionedConcurrency` and `concurrencyAutoscaling` to enable autoscaling. Set `concurrencyAutoscaling` to a boolean, or object with configuration. Any omitted configuration will use module defaults.
 
 ### Defaults
 

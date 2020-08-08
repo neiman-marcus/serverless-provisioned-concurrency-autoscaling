@@ -32,7 +32,7 @@ export default class Name {
 
   private normalizedFunctionName(functionName: string) {
     return ucfirst(
-      functionName.replace(/-/g, 'Dash').replace(/_/g, 'Underscore')
+      functionName.replace(/-/g, 'Dash').replace(/_/g, 'Underscore'),
     )
   }
 

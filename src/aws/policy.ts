@@ -3,7 +3,7 @@ import Resource from './resource'
 export default class Policy extends Resource {
   private readonly type: string = 'AWS::ApplicationAutoScaling::ScalingPolicy'
 
-  constructor(options: Options, private data: autoscalingConfig) {
+  constructor(options: Options, private data: AutoscalingConfig) {
     super(options)
   }
 
