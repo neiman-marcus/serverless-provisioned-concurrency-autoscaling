@@ -11,12 +11,12 @@ export default class Target extends Resource {
   }
 
   public toJSON(): any {
-    const resource = `function:${this.options.service}-${this.options.stage}-${this.data.function}:provisioned`
+    const resource = `function:${this.options.service}-${this.options.stage}-${this.data.function}:provisioned` // TODO extend this to use custom names
 
     const nameTarget = this.name.target(this.data.function)
 
     const DependsOn = [this.name.PCAliasLogicalId(this.data.function)].concat(
-      this.dependencies
+      this.dependencies,
     )
 
     return {
