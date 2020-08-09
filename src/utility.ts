@@ -5,7 +5,7 @@ export const clean = (input: string): string => {
   return truncate(input.replace(/[^a-z0-9+]+/gi, ''))
 }
 
-const truncate = (input: string): string => {
+export const truncate = (input: string): string => {
   return input.length <= 64 ? input : input.substr(0, 32) + md5(input)
 }
 

@@ -2,12 +2,23 @@
   "name": "serverless-provisioned-concurrency-autoscaling",
   "version": "1.0.0",
   "description": "Serverless Plugin for AWS Lambdas Provisioned Concurrency Auto Scaling configuration.",
-  "main": "./lib/index.js",
-  "files": [],
+  "main": "./lib/src/index.js",
+  "jest": {
+    "preset": "ts-jest",
+    "testPathIgnorePatterns": [
+      "/helpers/"
+    ],
+    "collectCoverageFrom": [
+      "src/aws/**/*",
+      "src/{!(index),}.ts"
+    ]
+  },
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"No test specified\"",
-    "lint": "eslint . --ext .ts,.tsx"
+    "build": "tsc -p tsconfig.release.json",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "jest --silent",
+    "test:coverage": "jest --coverage --silent",
+    "test:cache": "jest --clearCache"
   },
   "repository": {
     "type": "git",
@@ -34,6 +45,7 @@
   },
   "homepage": "https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling#readme",
   "devDependencies": {
+    "@types/jest": "^26.0.9",
     "@types/lodash": "^4.14.158",
     "@types/md5": "^2.2.0",
     "@types/node": "^14.0.27",
@@ -43,7 +55,9 @@
     "eslint": "^7.6.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jest": "^23.20.0",
+    "jest": "^26.2.2",
     "prettier": "^2.0.5",
+    "ts-jest": "^26.1.4",
     "typescript": "^3.9.7"
   },
   "dependencies": {

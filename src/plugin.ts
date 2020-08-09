@@ -127,7 +127,7 @@ export default class Plugin {
     })
   }
 
-  process(pcFunctions: AutoscalingConfig[]): void {
+  process(pcFunctions: AutoscalingConfig[]): boolean {
     pcFunctions.forEach((config: AutoscalingConfig) => {
       const functionConfig = this.generate(config)
 
@@ -139,6 +139,7 @@ export default class Plugin {
         )
       })
     })
+    return true
   }
 
   async beforeDeployResources(): Promise<unknown> {
