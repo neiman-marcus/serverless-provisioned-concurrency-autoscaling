@@ -5,6 +5,8 @@ import * as Serverless from 'serverless'
 
 import Policy from './aws/policy'
 import Target from './aws/target'
+import { CloudFormationResources } from 'serverless/plugins/aws/provider/awsProvider'
+import { AutoscalingConfig, ConcurrencyFunction, Options } from './@types/types'
 
 const text = {
   CLI_DONE: 'Added Provisoned Concurrency Auto Scaling to CloudFormation!',
@@ -18,7 +20,7 @@ const text = {
 
 export default class Plugin {
   serverless: Serverless
-  hooks: {}
+  hooks: Record<string, unknown> = {}
 
   constructor(serverless: Serverless) {
     this.serverless = serverless
@@ -52,7 +54,7 @@ export default class Plugin {
     }
   }
 
-  resources(config: AutoscalingConfig): any[] {
+  resources(config: AutoscalingConfig): CloudFormationResources[] {
     const data = this.defaults(config)
 
     const options: Options = {
@@ -63,6 +65,7 @@ export default class Plugin {
 
     this.serverless.cli.log(util.format(text.CLI_RESOURCE, config.function))
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const resources: any[] = []
 
     resources.push(...this.getPolicyAndTarget(options, data))
@@ -70,14 +73,18 @@ export default class Plugin {
     return resources
   }
 
-  getPolicyAndTarget(options: Options, data: AutoscalingConfig): any[] {
+  getPolicyAndTarget(
+    options: Options,
+    data: AutoscalingConfig,
+  ): [Policy, Target] {
     return [new Policy(options, data), new Target(options, data)]
   }
 
-  generate(config: AutoscalingConfig) {
-    let resources: any[] = []
-    let lastRessources: any[] = []
+  generate(config: AutoscalingConfig): CloudFormationResources[] {
+    let resources: CloudFormationResources[] = []
+    let lastRessources: unknown[] = []
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const current = this.resources(config).map((resource: any) => {
       resource.dependencies = lastRessources
 
@@ -85,12 +92,16 @@ export default class Plugin {
     })
 
     resources = resources.concat(current)
-    lastRessources = current.map((item: any) => Object.keys(item).pop())
+    lastRessources = current.map((item: CloudFormationResources) =>
+      Object.keys(item).pop(),
+    )
 
     return resources
   }
 
-  validateFunctions(instance: any) {
+  validateFunctions(
+    instance: ConcurrencyFunction,
+  ): boolean | '' | 0 | undefined {
     return (
       instance.provisionedConcurrency &&
       instance.concurrencyAutoscaling &&
@@ -101,8 +112,9 @@ export default class Plugin {
     )
   }
 
-  getFunctions() {
+  getFunctions(): AutoscalingConfig[] {
     return this.serverless.service.getAllFunctions().map((functionName) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const instance: any = this.serverless.service.getFunction(functionName)
 
       if (this.validateFunctions(instance)) {
@@ -115,7 +127,7 @@ export default class Plugin {
     })
   }
 
-  process(pcFunctions: AutoscalingConfig[]) {
+  process(pcFunctions: AutoscalingConfig[]): void {
     pcFunctions.forEach((config: AutoscalingConfig) => {
       const functionConfig = this.generate(config)
 
@@ -129,7 +141,7 @@ export default class Plugin {
     })
   }
 
-  async beforeDeployResources(): Promise<any> {
+  async beforeDeployResources(): Promise<unknown> {
     try {
       await Promise.resolve()
       const pcFunctions = this.getFunctions()

@@ -13,6 +13,6 @@ export const ucfirst = (data: string): string => {
   return `${_.upperFirst(data)}`
 }
 
-export const normalize = (functionName: string) => {
+export const normalize = (functionName: string): string => {
   return ucfirst(functionName.replace(/-/g, 'Dash').replace(/_/g, 'Underscore'))
 }

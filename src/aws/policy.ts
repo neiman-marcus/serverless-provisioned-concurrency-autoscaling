@@ -1,9 +1,11 @@
 import Name from '../name'
+import { Options, AutoscalingConfig } from 'src/@types/types'
 
 export default class Policy {
   data: AutoscalingConfig
   options: Options
-  name: any
+  name: Name
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dependencies: any[]
 
   constructor(options: Options, data: AutoscalingConfig) {
@@ -13,7 +15,7 @@ export default class Policy {
     this.name = new Name(options)
   }
 
-  toJSON(): any {
+  toJSON(): Record<string, unknown> {
     const PolicyName = this.name.policy(this.data.function)
     const Target = this.name.target(this.data.function)
     const DependsOn = [Target].concat(this.dependencies)

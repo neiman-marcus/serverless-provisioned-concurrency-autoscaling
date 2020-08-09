@@ -1,5 +1,6 @@
 import * as util from 'util'
 import { clean, ucfirst, normalize } from './utility'
+import { Options } from './@types/types'
 
 const TEXT = {
   POLICYSCALE: '%s-AutoScalingPolicy',
@@ -21,7 +22,7 @@ export default class Name {
     return clean(this.build(TEXT.POLICYSCALE, func))
   }
 
-  PCAliasLogicalId(functionName: any) {
+  PCAliasLogicalId(functionName: string): string {
     return `${normalize(functionName)}ProvConcLambdaAlias`
   }
 
@@ -33,7 +34,7 @@ export default class Name {
     ].join('')
   }
 
-  prefix() {
+  prefix(): string {
     return ucfirst(this.options.service)
   }
 

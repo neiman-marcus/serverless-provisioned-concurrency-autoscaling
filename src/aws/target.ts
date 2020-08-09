@@ -1,10 +1,12 @@
 import Name from '../name'
+import { Options, AutoscalingConfig } from 'src/@types/types'
 
 export default class Target {
   data: AutoscalingConfig
   options: Options
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dependencies: any[]
-  name: any
+  name: Name
 
   constructor(options: Options, data: AutoscalingConfig) {
     this.options = options
@@ -13,7 +15,7 @@ export default class Target {
     this.name = new Name(options)
   }
 
-  toJSON(): any {
+  toJSON(): Record<string, unknown> {
     const nameTarget = this.name.target(this.data.function)
 
     const DependsOn = [this.name.PCAliasLogicalId(this.data.function)].concat(
