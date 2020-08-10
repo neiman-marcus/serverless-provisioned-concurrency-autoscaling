@@ -80,12 +80,12 @@ describe('Validate functions', () => {
     expect(plugin.validateFunctions(func)).toBeTruthy()
   })
 
-  it('Should return undefined', () => {
+  it('Should return false', () => {
     const func: ConcurrencyFunction = {
       handler: 'handler.foo',
       concurrencyAutoscaling: false,
     }
-    expect(plugin.validateFunctions(func)).toBeUndefined()
+    expect(plugin.validateFunctions(func)).toBeFalsy()
   })
 })
 
