@@ -1,15 +1,13 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const serverless: any = {
   cli: {
     log: console.log,
   },
   service: {
-    getAllFunctions(): any[] {
+    getAllFunctions(): string[] {
       return ['foo']
     },
-    getFunction(functionName: string): any {
+    getFunction(functionName: string): unknown {
       return {
         handler: 'handler.hello',
         provisionedConcurrency: 1,

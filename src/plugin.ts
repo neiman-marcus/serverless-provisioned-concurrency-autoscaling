@@ -113,18 +113,21 @@ export default class Plugin {
   }
 
   getFunctions(): AutoscalingConfig[] {
-    return this.serverless.service.getAllFunctions().map((functionName) => {
+    const pcFunctions: AutoscalingConfig[] = []
+
+    this.serverless.service.getAllFunctions().forEach((functionName) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const instance: any = this.serverless.service.getFunction(functionName)
 
       if (this.validateFunctions(instance)) {
-        return {
+        pcFunctions.push({
           function: functionName,
           name: instance.name,
           ...instance.concurrencyAutoscaling,
-        }
+        })
       }
     })
+    return pcFunctions
   }
 
   process(pcFunctions: AutoscalingConfig[]): boolean {
