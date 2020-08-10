@@ -1,13 +1,21 @@
-import Resource from './resource'
+import Name from '../name'
+import { Options, AutoscalingConfig } from 'src/@types/types'
 
-export default class Policy extends Resource {
-  private readonly type: string = 'AWS::ApplicationAutoScaling::ScalingPolicy'
+export default class Policy {
+  data: AutoscalingConfig
+  options: Options
+  name: Name
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dependencies: any[]
 
-  constructor(options: Options, private data: AutoscalingConfig) {
-    super(options)
+  constructor(options: Options, data: AutoscalingConfig) {
+    this.options = options
+    this.data = data
+    this.dependencies = []
+    this.name = new Name(options)
   }
 
-  public toJSON(): any {
+  toJSON(): Record<string, unknown> {
     const PolicyName = this.name.policy(this.data.function)
     const Target = this.name.target(this.data.function)
     const DependsOn = [Target].concat(this.dependencies)
@@ -16,7 +24,7 @@ export default class Policy extends Resource {
       [PolicyName]: {
         DependsOn,
         Properties: {
-          PolicyName,
+          PolicyName: this.name.policy(this.data.function),
           PolicyType: 'TargetTrackingScaling',
           ScalingTargetId: { Ref: Target },
           TargetTrackingScalingPolicyConfiguration: {
@@ -28,7 +36,7 @@ export default class Policy extends Resource {
             TargetValue: this.data.usage,
           },
         },
-        Type: this.type,
+        Type: 'AWS::ApplicationAutoScaling::ScalingPolicy',
       },
     }
   }
