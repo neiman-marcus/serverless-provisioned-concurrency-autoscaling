@@ -6,6 +6,8 @@
 
 Serverless Plugin for AWS Lambda Provisioned Concurrency Auto Scaling configuration.
 
+Related blog post can be found on the [Neiman Marcus Medium page](https://medium.com/neiman-marcus-tech/serverless-provisioned-concurrency-autoscaling-3d8ec23d10c).
+
 ## Usage
 
 Add the [NPM package](https://www.npmjs.com/package/serverless-provisioned-concurrency-autoscaling) to your project:
