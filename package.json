@@ -1,6 +1,6 @@
 {
   "name": "serverless-provisioned-concurrency-autoscaling",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Serverless Plugin for AWS Lambdas Provisioned Concurrency Auto Scaling configuration.",
   "main": "./lib/index.js",
   "files": [
