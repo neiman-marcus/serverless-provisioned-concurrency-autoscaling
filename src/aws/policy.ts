@@ -15,10 +15,14 @@ export default class Policy {
     this.name = new Name(options)
   }
 
-  toJSON(): Record<string, unknown> {
+  toJSON(): Record<string, any> {
     const PolicyName = this.name.policy(this.data.function)
     const Target = this.name.target(this.data.function)
-    const DependsOn = [Target].concat(this.dependencies)
+    const DependsOn = [Target, this.name.PCAliasLogicalId(this.data.function)].concat(this.dependencies)
+
+    const metricSpecification =
+      this.data.customMetric ?
+        this.customMetricSpec() : this.predfinedMetricSpec()
 
     return {
       [PolicyName]: {
@@ -28,16 +32,41 @@ export default class Policy {
           PolicyType: 'TargetTrackingScaling',
           ScalingTargetId: { Ref: Target },
           TargetTrackingScalingPolicyConfiguration: {
-            PredefinedMetricSpecification: {
-              PredefinedMetricType: 'LambdaProvisionedConcurrencyUtilization',
-            },
             ScaleInCooldown: this.data.scaleInCooldown,
             ScaleOutCooldown: this.data.scaleOutCooldown,
             TargetValue: this.data.usage,
+            ...metricSpecification
           },
         },
         Type: 'AWS::ApplicationAutoScaling::ScalingPolicy',
       },
+    }
+  }
+
+  private predfinedMetricSpec(): Record<string, unknown> {
+    return {
+      PredefinedMetricSpecification: {
+        PredefinedMetricType: 'LambdaProvisionedConcurrencyUtilization',
+      }
+    }
+  }
+
+  private customMetricSpec(): Record<string, unknown> {
+    return {
+      CustomizedMetricSpecification: {
+        Dimensions: [{
+          Name: 'FunctionName',
+          Value: `${this.data.name}`
+        },
+        {
+          Name: 'Resource',
+          Value: `${this.data.name}:provisioned`
+        }],
+        MetricName: 'ProvisionedConcurrencyUtilization',
+        Namespace: 'AWS/Lambda',
+        Statistic: 'Average',
+        Unit: 'Count'
+      }
     }
   }
 }

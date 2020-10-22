@@ -1,6 +1,6 @@
 export const expectedPolicy = {
   FoosvcFooAutoScalingPolicyDevUsfoo2: {
-    DependsOn: ['FoosvcFooAutoScalingTargetDevUsfoo2'],
+    DependsOn: ['FoosvcFooAutoScalingTargetDevUsfoo2', 'FooProvConcLambdaAlias'],
     Properties: {
       PolicyName: 'FoosvcFooAutoScalingPolicyDevUsfoo2',
       PolicyType: 'TargetTrackingScaling',

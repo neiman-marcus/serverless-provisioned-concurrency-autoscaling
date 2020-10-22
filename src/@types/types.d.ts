@@ -22,4 +22,5 @@ export interface AwsFunctionConfig {
   usage?: number
   scaleInCooldown?: number
   scaleOutCooldown?: number
+  customMetric?: boolean
 }

@@ -49,6 +49,7 @@ export default class Plugin {
       scaleInCooldown: config.scaleInCooldown || 120,
       scaleOutCooldown: config.scaleOutCooldown || 0,
       usage: config.usage || 0.75,
+      customMetric: config.customMetric || false,
       function: config.function,
       name: config.name,
     }
