@@ -1,5 +1,5 @@
 import Name from '../name'
-import { Options, AutoscalingConfig } from 'src/@types/types'
+import { Options, AutoscalingConfig, CustomMetricConfig } from 'src/@types/types'
 
 export default class Policy {
   data: AutoscalingConfig
@@ -20,9 +20,9 @@ export default class Policy {
     const Target = this.name.target(this.data.function)
     const DependsOn = [Target, this.name.PCAliasLogicalId(this.data.function)].concat(this.dependencies)
 
-    const metricSpecification =
+    const metricSpecificationJson =
       this.data.customMetric ?
-        this.customMetricSpec() : this.predfinedMetricSpec()
+        this.customMetricJson(this.data.customMetric) : this.predfinedMetricJson()
 
     return {
       [PolicyName]: {
@@ -35,7 +35,7 @@ export default class Policy {
             ScaleInCooldown: this.data.scaleInCooldown,
             ScaleOutCooldown: this.data.scaleOutCooldown,
             TargetValue: this.data.usage,
-            ...metricSpecification
+            ...metricSpecificationJson
           },
         },
         Type: 'AWS::ApplicationAutoScaling::ScalingPolicy',
@@ -43,7 +43,7 @@ export default class Policy {
     }
   }
 
-  private predfinedMetricSpec(): Record<string, unknown> {
+  private predfinedMetricJson(): Record<string, unknown> {
     return {
       PredefinedMetricSpecification: {
         PredefinedMetricType: 'LambdaProvisionedConcurrencyUtilization',
@@ -51,21 +51,14 @@ export default class Policy {
     }
   }
 
-  private customMetricSpec(): Record<string, unknown> {
+  private customMetricJson(customMetric: CustomMetricConfig): Record<string, unknown> {
     return {
       CustomizedMetricSpecification: {
-        Dimensions: [{
-          Name: 'FunctionName',
-          Value: `${this.data.name}`
-        },
-        {
-          Name: 'Resource',
-          Value: `${this.data.name}:provisioned`
-        }],
-        MetricName: 'ProvisionedConcurrencyUtilization',
-        Namespace: 'AWS/Lambda',
-        Statistic: 'Average',
-        Unit: 'Count'
+        Dimensions: (customMetric.dimensions || []).map(d => ({ Name: d.name, Value: d.value })),
+        MetricName: customMetric.metricName,
+        Namespace: customMetric.namespace,
+        Statistic: customMetric.statistic,
+        Unit: customMetric.unit
       }
     }
   }

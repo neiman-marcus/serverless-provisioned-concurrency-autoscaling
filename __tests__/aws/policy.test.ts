@@ -17,7 +17,6 @@ describe('Policy', () => {
         scaleInCooldown: 120,
         scaleOutCooldown: 0,
         usage: 0.75,
-        customMetric: false,
       })
     expect(policy.toJSON()).toEqual(expectedPolicy)
   })
@@ -30,7 +29,22 @@ describe('Policy', () => {
         scaleInCooldown: 80,
         scaleOutCooldown: 10,
         usage: 0.5,
-        customMetric: true,
+        customMetric: {
+          dimensions: [
+            {
+              name: "FunctionName",
+              value: "bar-svc-dev-bar",
+            },
+            {
+              name: "Resource",
+              value: "bar-svc-dev-bar:provisioned",
+            },
+          ],
+          metricName: 'ProvisionedConcurrencyUtilization',
+          namespace: 'AWS/Lambda',
+          statistic: 'Average',
+          unit: 'Count',
+        }
       })
 
     const policyJson = policy.toJSON()
@@ -58,6 +72,44 @@ describe('Policy', () => {
         ScaleInCooldown: 80,
         ScaleOutCooldown: 10,
         TargetValue: 0.5,
+      })
+  })
+
+  it('should set configurable custom metric parameters', () => {
+    const policy = new Policy(options,
+      {
+        function: 'foo',
+        name: 'foo-svc-dev-foo',
+        customMetric: {
+          dimensions: [{
+            name: "someName",
+            value: "someValue",
+          }],
+          metricName: 'SomeMetric',
+          namespace: 'AWS/ELB',
+          statistic: 'Maximum',
+          unit: 'Sum',
+        }
+      })
+
+    const policyConfiguration =
+      policy.toJSON()
+        .FoosvcFooAutoScalingPolicyDevUsfoo2
+        .Properties
+        .TargetTrackingScalingPolicyConfiguration
+
+    expect(policyConfiguration).toHaveProperty('CustomizedMetricSpecification',
+      {
+        Dimensions: [
+          {
+            Name: "someName",
+            Value: "someValue",
+          }
+        ],
+        MetricName: "SomeMetric",
+        Namespace: "AWS/ELB",
+        Statistic: "Maximum",
+        Unit: "Sum",
       })
   })
 })

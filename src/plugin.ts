@@ -6,7 +6,7 @@ import * as Serverless from 'serverless'
 import Policy from './aws/policy'
 import Target from './aws/target'
 import { CloudFormationResources } from 'serverless/plugins/aws/provider/awsProvider'
-import { AutoscalingConfig, ConcurrencyFunction, Options } from './@types/types'
+import { AutoscalingConfig, ConcurrencyFunction, Options, CustomMetricConfig, Dimension } from './@types/types'
 
 const text = {
   CLI_DONE: 'Added Provisoned Concurrency Auto Scaling to CloudFormation!',
@@ -43,15 +43,40 @@ export default class Plugin {
   }
 
   defaults(config: AutoscalingConfig): AutoscalingConfig {
+    const customMetricConfig =
+      config.customMetric ?
+        { customMetric: this.customMetricDefaults(config.customMetric, config.name) } : {}
+
     return {
       maximum: config.maximum || 10,
       minimum: config.minimum || 1,
       scaleInCooldown: config.scaleInCooldown || 120,
       scaleOutCooldown: config.scaleOutCooldown || 0,
       usage: config.usage || 0.75,
-      customMetric: config.customMetric || false,
       function: config.function,
       name: config.name,
+      ...customMetricConfig
+    }
+  }
+
+  customMetricDefaults(customMetric: CustomMetricConfig, functionName: string): CustomMetricConfig {
+    const defaultDimensions: Dimension[] = [
+      {
+        name: "FunctionName",
+        value: functionName,
+      },
+      {
+        name: "Resource",
+        value: `${functionName}:provisioned`,
+      }
+    ]
+
+    return {
+      dimensions: customMetric.dimensions || defaultDimensions,
+      metricName: customMetric.metricName || 'ProvisionedConcurrencyUtilization',
+      namespace: customMetric.namespace || 'AWS/Lambda',
+      statistic: customMetric.statistic || 'Average',
+      unit: customMetric.unit || 'Count',
     }
   }
 

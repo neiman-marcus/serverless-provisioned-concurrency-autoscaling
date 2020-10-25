@@ -18,5 +18,30 @@ export const configDefault: AutoscalingConfig = {
   usage: 0.75,
   scaleInCooldown: 120,
   scaleOutCooldown: 0,
-  customMetric: false
+}
+
+export const configCustomMetricMin: AutoscalingConfig = {
+  ...configDefault,
+  customMetric: {
+    statistic: 'Average'
+  }
+}
+
+export const configCustomMetricDefault: AutoscalingConfig = {
+  ...configDefault,
+  customMetric: {
+    dimensions: [
+      {
+        name: "FunctionName",
+        value: "foo-svc-dev-foo",
+      },
+      {
+        name: "Resource",
+        value: "foo-svc-dev-foo:provisioned",
+      }],
+    metricName: 'ProvisionedConcurrencyUtilization',
+    namespace: 'AWS/Lambda',
+    statistic: 'Average',
+    unit: 'Count',
+  }
 }
