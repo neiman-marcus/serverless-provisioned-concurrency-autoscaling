@@ -15,6 +15,7 @@ export default class Policy {
     this.name = new Name(options)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toJSON(): Record<string, any> {
     const PolicyName = this.name.policy(this.data.function)
     const Target = this.name.target(this.data.function)
