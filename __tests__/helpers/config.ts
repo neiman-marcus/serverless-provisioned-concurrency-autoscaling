@@ -23,7 +23,7 @@ export const configDefault: AutoscalingConfig = {
 export const configCustomMetricMin: AutoscalingConfig = {
   ...configDefault,
   customMetric: {
-    statistic: 'Maximum'
+    statistic: 'maximum'
   }
 }
 
@@ -41,7 +41,7 @@ export const configCustomMetricDefault: AutoscalingConfig = {
       }],
     metricName: 'ProvisionedConcurrencyUtilization',
     namespace: 'AWS/Lambda',
-    statistic: 'Maximum',
+    statistic: 'maximum',
     unit: 'Count',
   }
 }

@@ -1,5 +1,6 @@
 import Name from '../name'
 import { Options, AutoscalingConfig, CustomMetricConfig } from 'src/@types/types'
+import { ucfirst } from '../utility'
 
 export default class Policy {
   data: AutoscalingConfig
@@ -58,7 +59,7 @@ export default class Policy {
         Dimensions: (customMetric.dimensions || []).map(d => ({ Name: d.name, Value: d.value })),
         MetricName: customMetric.metricName,
         Namespace: customMetric.namespace,
-        Statistic: customMetric.statistic,
+        Statistic: ucfirst(customMetric.statistic || ""),
         Unit: customMetric.unit
       }
     }

@@ -42,7 +42,7 @@ describe('Policy', () => {
           ],
           metricName: 'ProvisionedConcurrencyUtilization',
           namespace: 'AWS/Lambda',
-          statistic: 'Average',
+          statistic: 'average',
           unit: 'Count',
         }
       })
@@ -87,7 +87,7 @@ describe('Policy', () => {
           }],
           metricName: 'SomeMetric',
           namespace: 'AWS/ELB',
-          statistic: 'Maximum',
+          statistic: 'maximum',
           unit: 'Sum',
         }
       })

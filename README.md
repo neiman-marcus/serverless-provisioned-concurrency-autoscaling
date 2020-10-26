@@ -51,7 +51,7 @@ functions:
       scaleInCooldown: 120
       scaleOutCooldown: 0
       customMetric:
-        statistic: 'Maximum'
+        statistic: maximum
 ```
 
 That's it! With the next deployment, [serverless](https://serverless.com) will add Cloudformation resources to scale provisioned concurrency!
