@@ -72,11 +72,11 @@ export default class Plugin {
     ]
 
     return {
-      dimensions: customMetric.dimensions || defaultDimensions,
-      metricName: customMetric.metricName || 'ProvisionedConcurrencyUtilization',
-      namespace: customMetric.namespace || 'AWS/Lambda',
-      statistic: customMetric.statistic || 'Average',
-      unit: customMetric.unit || 'Count',
+      dimensions: defaultDimensions,
+      metricName: 'ProvisionedConcurrencyUtilization',
+      namespace: 'AWS/Lambda',
+      statistic: customMetric.statistic || 'Maximum',
+      unit: 'Count',
     }
   }
 

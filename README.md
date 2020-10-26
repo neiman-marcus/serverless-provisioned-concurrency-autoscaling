@@ -27,7 +27,7 @@ plugins:
 
 Add `concurrencyAutoscaling` parameters under each function you wish to autoscale in your `serverless.yml`. 
 
-Add `customMetric` if you want to alter metric parameters. For spikey invocation patterns better auto scaling results might be achieved by configuring `statistic: Maximum` 
+Add `customMetric: true` if you want to use `Maximum` instead of `Average` statistic.
 
 ```yaml
 # minimal configuration
@@ -51,15 +51,7 @@ functions:
       scaleInCooldown: 120
       scaleOutCooldown: 0
       customMetric:
-        dimensions:
-          - name : 'FunctionName'
-            value: 'function'
-          - name: 'Resource'
-            value: 'function:provisioned'
-        metricName: 'ProvisionedConcurrencyUtilization'
-        namespace: 'AWS/Lambda'
-        statistic: 'Average'
-        unit: 'Count'
+        statistic: 'Maximum'
 ```
 
 That's it! With the next deployment, [serverless](https://serverless.com) will add Cloudformation resources to scale provisioned concurrency!
