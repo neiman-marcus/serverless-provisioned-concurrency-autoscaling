@@ -22,4 +22,18 @@ export interface AwsFunctionConfig {
   usage?: number
   scaleInCooldown?: number
   scaleOutCooldown?: number
+  customMetric?: CustomMetricConfig
+}
+
+export interface CustomMetricConfig {
+  dimensions?: Dimension[]
+  metricName?: string
+  namespace?: string
+  statistic?: string
+  unit?: string
+}
+
+export interface Dimension {
+  name: string,
+  value: string,
 }

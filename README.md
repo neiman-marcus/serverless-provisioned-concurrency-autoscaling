@@ -25,7 +25,9 @@ plugins:
 
 ## Configuration
 
-Add `concurrencyAutoscaling` parameters under each function you wish to autoscale in your `serverless.yml`.
+Add `concurrencyAutoscaling` parameters under each function you wish to autoscale in your `serverless.yml`. 
+
+Add `customMetric: true` if you want to use `Maximum` instead of `Average` statistic.
 
 ```yaml
 # minimal configuration
@@ -48,6 +50,8 @@ functions:
       usage: 0.75
       scaleInCooldown: 120
       scaleOutCooldown: 0
+      customMetric:
+        statistic: maximum
 ```
 
 That's it! With the next deployment, [serverless](https://serverless.com) will add Cloudformation resources to scale provisioned concurrency!

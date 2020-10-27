@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Plugin from '../src/plugin'
-import { configDefault, configMin, configPartial } from './helpers/config'
+import { configDefault, configMin, configPartial, configCustomMetricDefault, configCustomMetricMin } from './helpers/config'
 import { serverless } from './helpers/serverless'
 import { options } from './helpers/options'
 import { expectedPolicy } from './helpers/policy'
@@ -25,6 +25,10 @@ describe('Defaults', () => {
       ...configDefault,
       ...configPartial,
     })
+  })
+
+  it('should set custom metric config defaults', () => {
+    expect(plugin.defaults(configCustomMetricMin)).toEqual(configCustomMetricDefault)
   })
 })
 

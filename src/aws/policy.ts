@@ -1,5 +1,6 @@
 import Name from '../name'
-import { Options, AutoscalingConfig } from 'src/@types/types'
+import { Options, AutoscalingConfig, CustomMetricConfig } from 'src/@types/types'
+import { ucfirst } from '../utility'
 
 export default class Policy {
   data: AutoscalingConfig
@@ -15,10 +16,15 @@ export default class Policy {
     this.name = new Name(options)
   }
 
-  toJSON(): Record<string, unknown> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  toJSON(): Record<string, any> {
     const PolicyName = this.name.policy(this.data.function)
     const Target = this.name.target(this.data.function)
-    const DependsOn = [Target].concat(this.dependencies)
+    const DependsOn = [Target, this.name.PCAliasLogicalId(this.data.function)].concat(this.dependencies)
+
+    const metricSpecificationJson =
+      this.data.customMetric ?
+        this.customMetricJson(this.data.customMetric) : this.predfinedMetricJson()
 
     return {
       [PolicyName]: {
@@ -28,16 +34,34 @@ export default class Policy {
           PolicyType: 'TargetTrackingScaling',
           ScalingTargetId: { Ref: Target },
           TargetTrackingScalingPolicyConfiguration: {
-            PredefinedMetricSpecification: {
-              PredefinedMetricType: 'LambdaProvisionedConcurrencyUtilization',
-            },
             ScaleInCooldown: this.data.scaleInCooldown,
             ScaleOutCooldown: this.data.scaleOutCooldown,
             TargetValue: this.data.usage,
+            ...metricSpecificationJson
           },
         },
         Type: 'AWS::ApplicationAutoScaling::ScalingPolicy',
       },
+    }
+  }
+
+  private predfinedMetricJson(): Record<string, unknown> {
+    return {
+      PredefinedMetricSpecification: {
+        PredefinedMetricType: 'LambdaProvisionedConcurrencyUtilization',
+      }
+    }
+  }
+
+  private customMetricJson(customMetric: CustomMetricConfig): Record<string, unknown> {
+    return {
+      CustomizedMetricSpecification: {
+        Dimensions: (customMetric.dimensions || []).map(d => ({ Name: d.name, Value: d.value })),
+        MetricName: customMetric.metricName,
+        Namespace: customMetric.namespace,
+        Statistic: ucfirst(customMetric.statistic || ""),
+        Unit: customMetric.unit
+      }
     }
   }
 }
