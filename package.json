@@ -19,6 +19,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.release.json",
     "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "test": "jest --silent",
     "test:coverage": "jest --coverage --silent",
     "test:cache": "jest --clearCache"

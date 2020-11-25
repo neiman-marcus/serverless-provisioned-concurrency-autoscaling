@@ -23,8 +23,8 @@ export const configDefault: AutoscalingConfig = {
 export const configCustomMetricMin: AutoscalingConfig = {
   ...configDefault,
   customMetric: {
-    statistic: 'maximum'
-  }
+    statistic: 'maximum',
+  },
 }
 
 export const configCustomMetricDefault: AutoscalingConfig = {
@@ -32,16 +32,17 @@ export const configCustomMetricDefault: AutoscalingConfig = {
   customMetric: {
     dimensions: [
       {
-        name: "FunctionName",
-        value: "foo-svc-dev-foo",
+        name: 'FunctionName',
+        value: 'foo-svc-dev-foo',
       },
       {
-        name: "Resource",
-        value: "foo-svc-dev-foo:provisioned",
-      }],
+        name: 'Resource',
+        value: 'foo-svc-dev-foo:provisioned',
+      },
+    ],
     metricName: 'ProvisionedConcurrencyUtilization',
     namespace: 'AWS/Lambda',
     statistic: 'maximum',
     unit: 'Count',
-  }
+  },
 }
