@@ -6,7 +6,13 @@ import * as Serverless from 'serverless'
 import Policy from './aws/policy'
 import Target from './aws/target'
 import { CloudFormationResources } from 'serverless/plugins/aws/provider/awsProvider'
-import { AutoscalingConfig, ConcurrencyFunction, Options, CustomMetricConfig, Dimension } from './@types/types'
+import {
+  AutoscalingConfig,
+  ConcurrencyFunction,
+  Options,
+  CustomMetricConfig,
+  Dimension,
+} from './@types/types'
 
 const text = {
   CLI_DONE: 'Added Provisoned Concurrency Auto Scaling to CloudFormation!',
@@ -18,12 +24,28 @@ const text = {
   ONLY_AWS_SUPPORT: 'Only supported for AWS provider',
 }
 
+const schema = {
+  properties: {
+    concurrencyAutoscaling: { type: ['boolean', 'object'] },
+  },
+}
+
 export default class Plugin {
   serverless: Serverless
   hooks: Record<string, unknown> = {}
 
   constructor(serverless: Serverless) {
     this.serverless = serverless
+
+    if (
+      this.serverless.configSchemaHandler &&
+      this.serverless.configSchemaHandler.defineFunctionProperties
+    ) {
+      this.serverless.configSchemaHandler.defineFunctionProperties(
+        'providerName',
+        schema,
+      )
+    }
 
     this.hooks = {
       'package:compileEvents': this.beforeDeployResources.bind(this),
@@ -43,9 +65,14 @@ export default class Plugin {
   }
 
   defaults(config: AutoscalingConfig): AutoscalingConfig {
-    const customMetricConfig =
-      config.customMetric ?
-        { customMetric: this.customMetricDefaults(config.customMetric, config.name) } : {}
+    const customMetricConfig = config.customMetric
+      ? {
+          customMetric: this.customMetricDefaults(
+            config.customMetric,
+            config.name,
+          ),
+        }
+      : {}
 
     return {
       maximum: config.maximum || 10,
@@ -55,20 +82,23 @@ export default class Plugin {
       usage: config.usage || 0.75,
       function: config.function,
       name: config.name,
-      ...customMetricConfig
+      ...customMetricConfig,
     }
   }
 
-  customMetricDefaults(customMetric: CustomMetricConfig, functionName: string): CustomMetricConfig {
+  customMetricDefaults(
+    customMetric: CustomMetricConfig,
+    functionName: string,
+  ): CustomMetricConfig {
     const defaultDimensions: Dimension[] = [
       {
-        name: "FunctionName",
+        name: 'FunctionName',
         value: functionName,
       },
       {
-        name: "Resource",
+        name: 'Resource',
         value: `${functionName}:provisioned`,
-      }
+      },
     ]
 
     return {
