@@ -42,7 +42,7 @@ export default class Plugin {
       this.serverless.configSchemaHandler.defineFunctionProperties
     ) {
       this.serverless.configSchemaHandler.defineFunctionProperties(
-        'providerName',
+        'aws',
         schema,
       )
     }
