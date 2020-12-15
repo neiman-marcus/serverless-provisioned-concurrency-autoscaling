@@ -25,7 +25,7 @@ plugins:
 
 ## Configuration
 
-Add `concurrencyAutoscaling` parameters under each function you wish to autoscale in your `serverless.yml`. 
+Add `concurrencyAutoscaling` parameters under each function you wish to autoscale in your `serverless.yml`.
 
 Add `customMetric: true` if you want to use `Maximum` instead of `Average` statistic.
 
@@ -38,7 +38,7 @@ functions:
     provisionedConcurrency: 1
     concurrencyAutoscaling: true
 
-  # full configuration
+# full configuration
 
   world:
     handler: handler.world

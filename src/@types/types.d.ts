@@ -34,6 +34,6 @@ export interface CustomMetricConfig {
 }
 
 export interface Dimension {
-  name: string,
-  value: string,
+  name: string
+  value: string
 }
