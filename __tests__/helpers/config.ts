@@ -18,6 +18,7 @@ export const configDefault: AutoscalingConfig = {
   usage: 0.75,
   scaleInCooldown: 120,
   scaleOutCooldown: 0,
+  alias: 'provisioned',
 }
 
 export const configCustomMetricMin: AutoscalingConfig = {

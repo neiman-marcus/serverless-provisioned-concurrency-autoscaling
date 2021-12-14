@@ -23,6 +23,7 @@ export interface AwsFunctionConfig {
   scaleInCooldown?: number
   scaleOutCooldown?: number
   customMetric?: CustomMetricConfig
+  alias?: string
 }
 
 export interface CustomMetricConfig {

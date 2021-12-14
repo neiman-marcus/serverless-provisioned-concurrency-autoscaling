@@ -28,7 +28,7 @@ export default class Target {
         Properties: {
           MaxCapacity: this.data.maximum,
           MinCapacity: this.data.minimum,
-          ResourceId: `function:${this.data.name}:provisioned`,
+          ResourceId: `function:${this.data.name}:${this.data.alias}`,
           ScalableDimension: 'lambda:function:ProvisionedConcurrency',
           ServiceNamespace: 'lambda',
           RoleARN: {
