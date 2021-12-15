@@ -38,6 +38,25 @@ describe('Defaults', () => {
       configCustomMetricDefault,
     )
   })
+  it('should set custom provisioned alias', () => {
+    const alias = 'my-custom-alias'
+    const configMetric = {
+      ...configCustomMetricDefault,
+      alias,
+    }
+    const resource = configMetric.customMetric!.dimensions!.find(
+      (el) => el.name === 'Resource',
+    )!
+
+    resource.value = `${configMin.name}:${alias}`
+
+    expect(
+      plugin.defaults({
+        ...configCustomMetricMin,
+        alias,
+      }),
+    ).toEqual(configMetric)
+  })
 })
 
 describe('Resources', () => {

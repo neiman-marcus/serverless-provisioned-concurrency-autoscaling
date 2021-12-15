@@ -9,7 +9,7 @@ const options: Options = {
 }
 
 describe('Policy', () => {
-  it('should construct comeplete policy object', () => {
+  it('should construct complete policy object', () => {
     const policy = new Policy(options, {
       function: 'foo',
       name: 'foo-svc-dev-foo',
