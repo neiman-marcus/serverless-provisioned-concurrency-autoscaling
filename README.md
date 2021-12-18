@@ -38,13 +38,14 @@ functions:
     provisionedConcurrency: 1
     concurrencyAutoscaling: true
 
-# full configuration
+  # full configuration
 
   world:
     handler: handler.world
     provisionedConcurrency: 1
     concurrencyAutoscaling:
       enabled: true
+      alias: provisioned
       maximum: 10
       minimum: 1
       usage: 0.75
@@ -61,6 +62,7 @@ You must provide atleast `provisionedConcurrency` and `concurrencyAutoscaling` t
 ### Defaults
 
 ```yaml
+alias: provisioned
 maximum: 10
 minimum: 1
 usage: 0.75

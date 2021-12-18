@@ -11,6 +11,7 @@ const TargetConstructor = () => {
 
   const data: AutoscalingConfig = {
     function: 'foo',
+    alias: 'provisioned',
     name: 'foo-svc-dev-foo',
     maximum: 10,
     minimum: 1,

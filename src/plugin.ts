@@ -70,6 +70,7 @@ export default class Plugin {
           customMetric: this.customMetricDefaults(
             config.customMetric,
             config.name,
+            config.alias,
           ),
         }
       : {}
@@ -82,6 +83,7 @@ export default class Plugin {
       usage: config.usage || 0.75,
       function: config.function,
       name: config.name,
+      alias: config.alias || 'provisioned',
       ...customMetricConfig,
     }
   }
@@ -89,6 +91,7 @@ export default class Plugin {
   customMetricDefaults(
     customMetric: CustomMetricConfig,
     functionName: string,
+    alias: AutoscalingConfig['alias'],
   ): CustomMetricConfig {
     const defaultDimensions: Dimension[] = [
       {
@@ -97,7 +100,7 @@ export default class Plugin {
       },
       {
         name: 'Resource',
-        value: `${functionName}:provisioned`,
+        value: `${functionName}:${alias}`,
       },
     ]
 
