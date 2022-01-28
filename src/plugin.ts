@@ -26,7 +26,9 @@ const text = {
 
 const schema = {
   properties: {
-    concurrencyAutoscaling: { type: ['boolean', 'object'] },
+    concurrencyAutoscaling: {
+      anyOf: [{ type: 'boolean' }, { type: 'object' }],
+    },
   },
 }
 
