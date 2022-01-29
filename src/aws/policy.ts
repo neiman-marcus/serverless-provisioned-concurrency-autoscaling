@@ -31,7 +31,7 @@ export default class Policy {
 
     const metricSpecificationJson = this.data.customMetric
       ? this.customMetricJson(this.data.customMetric)
-      : this.predfinedMetricJson()
+      : this.predefinedMetricJson()
 
     return {
       [PolicyName]: {
@@ -52,7 +52,7 @@ export default class Policy {
     }
   }
 
-  private predfinedMetricJson(): Record<string, unknown> {
+  private predefinedMetricJson(): Record<string, unknown> {
     return {
       PredefinedMetricSpecification: {
         PredefinedMetricType: 'LambdaProvisionedConcurrencyUtilization',

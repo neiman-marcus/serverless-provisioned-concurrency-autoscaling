@@ -114,4 +114,31 @@ describe('Policy', () => {
       },
     )
   })
+
+  it('should set empty dimensions and statistics', () => {
+    const policy = new Policy(options, {
+      function: 'foo',
+      name: 'foo-svc-dev-foo',
+      customMetric: {
+        metricName: 'SomeMetric',
+        namespace: 'AWS/ELB',
+        unit: 'Sum',
+      },
+    })
+
+    const policyConfiguration = policy.toJSON()
+      .FoosvcFooAutoScalingPolicyDevUsfoo2.Properties
+      .TargetTrackingScalingPolicyConfiguration
+
+    expect(policyConfiguration).toHaveProperty(
+      'CustomizedMetricSpecification',
+      {
+        Dimensions: [],
+        MetricName: 'SomeMetric',
+        Namespace: 'AWS/ELB',
+        Statistic: '',
+        Unit: 'Sum',
+      },
+    )
+  })
 })
