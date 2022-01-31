@@ -38,6 +38,7 @@ describe('Defaults', () => {
       configCustomMetricDefault,
     )
   })
+
   it('should set custom provisioned alias', () => {
     const alias = 'my-custom-alias'
     const configMetric = {
