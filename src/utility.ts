@@ -1,12 +1,11 @@
 import { createHash } from 'crypto'
-import _ from 'lodash'
 
 export const clean = (input: string): string => {
   return truncate(input.replace(/[^a-z0-9+]+/gi, ''))
 }
 
 const md5 = (input: string): string => {
-  return createHash("md5").update(input).digest("hex")
+  return createHash('md5').update(input).digest('hex')
 }
 
 export const truncate = (input: string): string => {
@@ -14,7 +13,7 @@ export const truncate = (input: string): string => {
 }
 
 export const ucfirst = (data: string): string => {
-  return `${_.upperFirst(data)}`
+  return `${data.charAt(0).toUpperCase()}${data.slice(1)}`
 }
 
 export const normalize = (functionName: string): string => {
