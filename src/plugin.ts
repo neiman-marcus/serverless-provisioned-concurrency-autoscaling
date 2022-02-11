@@ -1,5 +1,4 @@
 import assert from 'assert'
-import _ from 'lodash'
 import * as util from 'util'
 import * as Serverless from 'serverless'
 
@@ -199,11 +198,12 @@ export default class Plugin {
       const functionConfig = this.generate(config)
 
       functionConfig.forEach((resource) => {
-        _.merge(
-          this.serverless.service.provider.compiledCloudFormationTemplate
-            .Resources,
-          resource,
-        )
+        this.serverless.service.provider.compiledCloudFormationTemplate.Resources =
+          {
+            ...this.serverless.service.provider.compiledCloudFormationTemplate
+              .Resources,
+            ...resource,
+          }
       })
     })
     return true

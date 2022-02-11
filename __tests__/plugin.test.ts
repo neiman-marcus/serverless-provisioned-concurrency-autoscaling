@@ -45,9 +45,9 @@ describe('Defaults', () => {
       ...configCustomMetricDefault,
       alias,
     }
-    const resource = configMetric.customMetric!.dimensions!.find(
+    const resource = configMetric.customMetric?.dimensions?.find(
       (el) => el.name === 'Resource',
-    )!
+    ) ?? { value: undefined }
 
     resource.value = `${configMin.name}:${alias}`
 

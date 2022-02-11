@@ -1,6 +1,6 @@
 {
   "name": "serverless-provisioned-concurrency-autoscaling",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Serverless Plugin for AWS Lambdas Provisioned Concurrency Auto Scaling Configuration.",
   "main": "./lib/index.js",
   "files": [
@@ -56,7 +56,7 @@
     "@types/serverless": "^1.78.13",
     "@typescript-eslint/eslint-plugin": "^3.8.0",
     "@typescript-eslint/parser": "^3.8.0",
-    "eslint": "^7.6.0",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jest": "^23.20.0",
     "jest": "^27.4.7",
@@ -64,7 +64,5 @@
     "ts-jest": "^27.1.3",
     "typescript": "^3.9.7"
   },
-  "dependencies": {
-    "lodash": "^4.17.21"
-  }
+  "dependencies": {}
 }
