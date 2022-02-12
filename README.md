@@ -2,7 +2,11 @@
 
 # ⚡️ serverless-provisioned-concurrency-autoscaling
 
-[![npm](https://img.shields.io/npm/v/serverless-provisioned-concurrency-autoscaling)](https://www.npmjs.com/package/serverless-provisioned-concurrency-autoscaling) [![build](https://img.shields.io/github/workflow/status/neiman-marcus/serverless-provisioned-concurrency-autoscaling/build%20ci)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/actions?query=workflow%3A%22build%20ci%22) [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/blob/master/LICENSE) [![pr](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/blob/master/CONTRIBUTING.md)
+[![npm](https://img.shields.io/npm/v/serverless-provisioned-concurrency-autoscaling)](https://www.npmjs.com/package/serverless-provisioned-concurrency-autoscaling)
+[![build](https://img.shields.io/github/workflow/status/neiman-marcus/serverless-provisioned-concurrency-autoscaling/build%20ci)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/actions?query=workflow%3A%22build%20ci%22)
+[![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/blob/master/LICENSE)
+[![pr](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/blob/master/CONTRIBUTING.md)
+[![Known Vulnerabilities](https://snyk.io/test/npm/serverless-provisioned-concurrency-autoscaling/badge.svg)](https://snyk.io/test/npm/serverless-provisioned-concurrency-autoscaling)
 
 Serverless Plugin for AWS Lambda Provisioned Concurrency Auto Scaling configuration.
 

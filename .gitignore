@@ -106,5 +106,7 @@ dist
 # Misc
 .local
 .DS_Store
-coverage
 lib
+
+# Webstorm files
+.idea
