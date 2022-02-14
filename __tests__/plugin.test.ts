@@ -101,37 +101,29 @@ describe('Validate functions', () => {
     expect(plugin.validateFunctions(func)).toBeTruthy()
   })
 
-  it.each([
-    true,
-    { enabled: true }
-  ])('Function with object configuration should return true', (
-    concurrencyAutoscaling: boolean | { enabled: boolean}
-  ) => {
-    const func = {
-      handler: 'handler.foo',
-      concurrencyAutoscaling,
-      provisionedConcurrency: 1,
-    } as ConcurrencyFunction
-    expect(plugin.validateFunctions(func)).toBeTruthy()
-  })
+  it.each([true, { enabled: true }])(
+    'Function with object configuration should return true',
+    (concurrencyAutoscaling: boolean | { enabled: boolean }) => {
+      const func = {
+        handler: 'handler.foo',
+        concurrencyAutoscaling,
+        provisionedConcurrency: 1,
+      } as ConcurrencyFunction
+      expect(plugin.validateFunctions(func)).toBeTruthy()
+    },
+  )
 
-  it.each([
-    undefined,
-    null,
-    false,
-    { },
-    { enabled: null },
-    { enabled: false }
-  ])('Function with object configuration should return true', (
-    concurrencyAutoscaling: any
-  ) => {
-    const func = {
-      handler: 'handler.foo',
-      concurrencyAutoscaling,
-      provisionedConcurrency: 1,
-    } as ConcurrencyFunction
-    expect(plugin.validateFunctions(func)).toBeFalsy()
-  })
+  it.each([undefined, null, false, {}, { enabled: null }, { enabled: false }])(
+    'Function with object configuration should return true',
+    (concurrencyAutoscaling: any) => {
+      const func = {
+        handler: 'handler.foo',
+        concurrencyAutoscaling,
+        provisionedConcurrency: 1,
+      } as ConcurrencyFunction
+      expect(plugin.validateFunctions(func)).toBeFalsy()
+    },
+  )
 
   it('Should return false', () => {
     const func = {
@@ -141,16 +133,17 @@ describe('Validate functions', () => {
     expect(plugin.validateFunctions(func)).toBeFalsy()
   })
 
-  it.each([
-    undefined, null, 0
-  ])('Function with Not Set Provisioned Concurrency Should Return False', (provisionedConcurrency: number) => {
-    const func = {
-      handler: 'handler.foo',
-      concurrencyAutoscaling: false,
-      provisionedConcurrency
-    } as ConcurrencyFunction
-    expect(plugin.validateFunctions(func)).toBeFalsy()
-  })
+  it.each([undefined, null, 0])(
+    'Function with Not Set Provisioned Concurrency Should Return False',
+    (provisionedConcurrency: number) => {
+      const func = {
+        handler: 'handler.foo',
+        concurrencyAutoscaling: false,
+        provisionedConcurrency,
+      } as ConcurrencyFunction
+      expect(plugin.validateFunctions(func)).toBeFalsy()
+    },
+  )
 })
 
 describe('Process', () => {
