@@ -1,5 +1,5 @@
 import Target from '../../src/aws/target'
-import { Options, AutoscalingConfig } from 'src/@types/types'
+import { Options, AutoscalingConfig } from 'src/@types'
 import { expectedTarget } from '../helpers/target'
 
 const TargetConstructor = () => {

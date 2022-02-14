@@ -11,7 +11,7 @@ import { serverless } from './helpers/serverless'
 import { options } from './helpers/options'
 import { expectedPolicy } from './helpers/policy'
 import { expectedTarget } from './helpers/target'
-import { ConcurrencyFunction } from 'src/@types/types'
+import { ConcurrencyFunction } from 'src/@types'
 
 const plugin = new Plugin(serverless)
 

@@ -1,4 +1,4 @@
-import { Options } from '../../src/@types/types'
+import { Options } from '../../src/@types'
 
 export const options: Options = {
   stage: 'dev',

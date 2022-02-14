@@ -11,7 +11,7 @@ import {
   Options,
   CustomMetricConfig,
   Dimension,
-} from './@types/types'
+} from './@types'
 
 const text = {
   CLI_DONE: 'Added Provisioned Concurrency Auto Scaling to CloudFormation!',

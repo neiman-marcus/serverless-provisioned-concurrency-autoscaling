@@ -1,4 +1,4 @@
-import { AutoscalingConfig } from '../../src/@types/types'
+import { AutoscalingConfig } from '../../src/@types'
 
 export const configMin: AutoscalingConfig = {
   function: 'foo',

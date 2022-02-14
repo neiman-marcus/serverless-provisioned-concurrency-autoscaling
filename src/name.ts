@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { clean, ucfirst, normalize } from './utility'
-import { Options } from './@types/types'
+import { Options } from './@types'
 
 const TEXT = {
   POLICYSCALE: '%s-AutoScalingPolicy',
