@@ -24,6 +24,7 @@ export interface AwsFunctionConfig {
   scaleOutCooldown?: number
   customMetric?: CustomMetricConfig
   alias?: string
+  scheduledActions?: ScheduledAction[]
 }
 
 export interface CustomMetricConfig {
@@ -37,4 +38,18 @@ export interface CustomMetricConfig {
 export interface Dimension {
   name: string
   value: string
+}
+
+export interface ScheduledAction {
+  name: string
+  startTime?: string
+  endTime?: string
+  timezone?: string
+  schedule: string
+  action: ScalableTargetAction
+}
+
+export interface ScalableTargetAction {
+  maximum?: number
+  minimum?: number
 }

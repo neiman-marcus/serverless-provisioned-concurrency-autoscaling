@@ -57,11 +57,28 @@ functions:
       scaleOutCooldown: 0
       customMetric:
         statistic: maximum
+      scheduledActions:
+        - name: OpenOfficeTime
+          startTime: "2025-01-01T00:00:00.000Z"
+          endTime: "2025-12-31T23:59:59.999Z"
+          timezone: CST
+          schedule: "cron(* 30 8 * 1-6 *)"
+          action:
+            maximum: 100
+            minimum: 10
+        - name: CloseOfficeTime
+          startTime: "2025-01-01T00:00:00.000Z"
+          endTime: "2025-12-31T23:59:59.999Z"
+          timezone: CST
+          schedule: "cron(* 30 17 * 1-6 *)"
+          action:
+            maximum: 10
+            minimum: 1
 ```
 
 That's it! With the next deployment, [serverless](https://serverless.com) will add Cloudformation resources to scale provisioned concurrency!
 
-You must provide atleast `provisionedConcurrency` and `concurrencyAutoscaling` to enable autoscaling. Set `concurrencyAutoscaling` to a boolean, or object with configuration. Any omitted configuration will use module defaults.
+You must provide at least `provisionedConcurrency` and `concurrencyAutoscaling` to enable autoscaling. Set `concurrencyAutoscaling` to a boolean, or object with configuration. Any omitted configuration will use module defaults.
 
 ### Defaults
 
@@ -74,6 +91,33 @@ scaleInCooldown: 120
 scaleOutCooldown: 0
 ```
 
+### Scheduled Actions
+
+For more details on Scheduled Actions formats see
+[the AWS CloudFormation ScheduledAction description](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-applicationautoscaling-scalabletarget-scheduledaction.html). 
+
+#### Description of `scheduledActions`'s properties:
+
+| Attribute | Description                                                                                                 | Required | Example                            |
+|-----------|-------------------------------------------------------------------------------------------------------------|----------|------------------------------------|
+| endTime   | The date and time that the action is scheduled to end, in UTC.                                              | no       | `2025-12-31T23:59:59.999Z`         |
+| startTime | The date and time that the action is scheduled to begin, in UTC.                                            | no       | `2025-01-01T00:00:00.000Z`         |
+| timezone  | Timezone for `startTime` and `endTime`.                                                                     | no       | `CST`                              |
+| name      | The name of the scheduled action unique among all other scheduled actions on the specified scalable target. | yes      | `OpenOfficeHourScheduleStart`      |
+| schedule  | One of three string formats: `at`, `cron` or `rate` (see next table).                                       | yes      | `cron(* 30 8 * 1-6 *)`             |
+| action    | Object of `minimum` and `maximum` properties. At least one is required.                                     | yes      | `minimum: 100` <br> `maximum: 105` |
+
+#### Description of `schedule`'s properties:
+
+Only one at a time can be specified. For more details on schedule syntax see
+[the AWS CloudFormation ScheduledAction description](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-applicationautoscaling-scalabletarget-scheduledaction.html).
+
+| Attribute | Description                          | Format                    | Example                   |
+|-----------|--------------------------------------|---------------------------|---------------------------|
+| at        | A start                              | `at(yyyy-mm-ddThh:mm:ss)` | `at(2025-01-02T00:00:00)` |
+| cron      | A cron syntax for recurring schedule | `cron(fields)`            | `cron(* 30 17 * 1-6 *)`   |
+| rate      | A rate                               | `rate(value unit)`        | `rate(16 minuets)`        |
+
 ## Known Issues/Limitations
 
 N/A
@@ -81,6 +125,7 @@ N/A
 ## Authors
 
 - [Clay Danford](mailto:crd013@gmail.com)
+- [Dawid Boissé](mailto:dawid.boisse@gmail.com)
 
 ## Conduct / Contributing / License
 

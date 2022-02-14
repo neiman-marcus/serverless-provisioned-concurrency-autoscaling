@@ -86,6 +86,7 @@ export default class Plugin {
       name: config.name,
       alias: config.alias || 'provisioned',
       ...customMetricConfig,
+      scheduledActions: config.scheduledActions
     }
   }
 

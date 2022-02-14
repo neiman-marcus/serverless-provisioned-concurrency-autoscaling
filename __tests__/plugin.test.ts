@@ -6,11 +6,15 @@ import {
   configPartial,
   configCustomMetricDefault,
   configCustomMetricMin,
+  configScheduledActions
 } from './helpers/config'
 import { serverless } from './helpers/serverless'
 import { options } from './helpers/options'
 import { expectedPolicy } from './helpers/policy'
-import { expectedTarget } from './helpers/target'
+import {
+  expectedTarget,
+  expectedTargetWithSingleScheduledAction
+} from './helpers/target'
 import { ConcurrencyFunction } from 'src/@types/types'
 
 const plugin = new Plugin(serverless)
@@ -87,7 +91,7 @@ describe('Policy and Target', () => {
 describe('Generate', () => {
   it('Should generate resources', () => {
     const resources: any[] = plugin.generate(configDefault)
-    expect(resources).toStrictEqual([expectedPolicy, expectedTarget])
+    expect(resources).toEqual([expectedPolicy, expectedTarget])
   })
 })
 
@@ -150,22 +154,32 @@ describe('Process', () => {
   it('Process for cloudformation object', () => {
     plugin.process([configDefault])
     expect(
-      plugin.serverless.service.provider.compiledCloudFormationTemplate
-        .Resources,
-    ).toStrictEqual({
+      plugin.serverless.service.provider.compiledCloudFormationTemplate.Resources
+    ).toEqual({
       ...expectedPolicy,
-      ...expectedTarget,
+      ...expectedTarget
+    })
+  })
+
+  it('Process for CloudFormation with Scheduled Actions', (): void => {
+    plugin.process([configScheduledActions])
+    expect(
+      plugin.serverless.service.provider.compiledCloudFormationTemplate.Resources
+    ).toEqual({
+      ...expectedPolicy,
+      ...expectedTargetWithSingleScheduledAction
     })
   })
 })
 
 describe('BeforeDeployResources', () => {
   it('Run the gambit', () => {
+    plugin.process([configDefault])
+
     plugin.beforeDeployResources()
     expect(
-      plugin.serverless.service.provider.compiledCloudFormationTemplate
-        .Resources,
-    ).toStrictEqual({
+      plugin.serverless.service.provider.compiledCloudFormationTemplate.Resources,
+    ).toEqual({
       ...expectedPolicy,
       ...expectedTarget,
     })

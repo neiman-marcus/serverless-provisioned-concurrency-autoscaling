@@ -15,12 +15,30 @@ export default class Target {
     this.name = new Name(options)
   }
 
+  getSchedulesActions(): unknown[] {
+    console.log('--- scheduledActions generation ---')
+    console.log(JSON.stringify(this.data))
+    return this.data.scheduledActions?.map(scheduledAction => { return {
+        EndTime: scheduledAction.endTime,
+        StartTime: scheduledAction.startTime,
+        Timezone: scheduledAction.timezone,
+        ScalableTargetAction: {
+          MaxCapacity: scheduledAction.action.maximum,
+          MinCapacity: scheduledAction.action.minimum
+        },
+        ScheduledActionName: scheduledAction.name,
+        Schedule: scheduledAction.schedule
+    }}) as unknown[]
+  }
+
   toJSON(): Record<string, unknown> {
     const nameTarget = this.name.target(this.data.function)
 
     const DependsOn = [this.name.PCAliasLogicalId(this.data.function)].concat(
       this.dependencies,
     )
+
+    const ScheduledActions = this.getSchedulesActions()
 
     return {
       [nameTarget]: {
@@ -32,9 +50,9 @@ export default class Target {
           ScalableDimension: 'lambda:function:ProvisionedConcurrency',
           ServiceNamespace: 'lambda',
           RoleARN: {
-            'Fn::Sub':
-              'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
+            'Fn::Sub': 'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
           },
+          ScheduledActions
         },
         Type: 'AWS::ApplicationAutoScaling::ScalableTarget',
       },
