@@ -14,7 +14,7 @@ import {
 } from './@types/types'
 
 const text = {
-  CLI_DONE: 'Added Provisoned Concurrency Auto Scaling to CloudFormation!',
+  CLI_DONE: 'Added Provisioned Concurrency Auto Scaling to CloudFormation!',
   CLI_RESOURCE: ' - Building Configuration for resource "lambda/%s"',
   CLI_SKIP: 'Skipping Provisioned Concurrency Auto Scaling: %s!',
   CLI_START: 'Configuring Provisioned Concurrency Auto Scaling...',
@@ -142,17 +142,17 @@ export default class Plugin {
 
   generate(config: AutoscalingConfig): CloudFormationResources[] {
     let resources: CloudFormationResources[] = []
-    let lastRessources: unknown[] = []
+    let lastResources: unknown[] = []
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const current = this.resources(config).map((resource: any) => {
-      resource.dependencies = lastRessources
+      resource.dependencies = lastResources
 
       return resource.toJSON()
     })
 
     resources = resources.concat(current)
-    lastRessources = current.map((item: CloudFormationResources) =>
+    lastResources = current.map((item: CloudFormationResources) =>
       Object.keys(item).pop(),
     )
 
@@ -160,19 +160,10 @@ export default class Plugin {
   }
 
   validateFunctions(instance: ConcurrencyFunction): boolean {
-    if (
-      instance.provisionedConcurrency &&
-      instance.provisionedConcurrency > 0 &&
-      instance.concurrencyAutoscaling &&
-      ((typeof instance.concurrencyAutoscaling === 'boolean' &&
-        instance.concurrencyAutoscaling === true) ||
-        (typeof instance.concurrencyAutoscaling === 'object' &&
-          instance.concurrencyAutoscaling.enabled === true))
-    ) {
-      return true
-    } else {
-      return false
-    }
+    return !!(instance.provisionedConcurrency &&
+      instance.provisionedConcurrency > 0 && instance.concurrencyAutoscaling &&
+      ((typeof instance.concurrencyAutoscaling === 'boolean' && instance.concurrencyAutoscaling) ||
+        (typeof instance.concurrencyAutoscaling === 'object' && instance.concurrencyAutoscaling.enabled === true)));
   }
 
   getFunctions(): AutoscalingConfig[] {
