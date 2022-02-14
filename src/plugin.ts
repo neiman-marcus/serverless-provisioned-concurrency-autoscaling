@@ -160,10 +160,15 @@ export default class Plugin {
   }
 
   validateFunctions(instance: ConcurrencyFunction): boolean {
-    return !!(instance.provisionedConcurrency &&
-      instance.provisionedConcurrency > 0 && instance.concurrencyAutoscaling &&
-      ((typeof instance.concurrencyAutoscaling === 'boolean' && instance.concurrencyAutoscaling) ||
-        (typeof instance.concurrencyAutoscaling === 'object' && instance.concurrencyAutoscaling.enabled === true)));
+    return !!(
+      instance.provisionedConcurrency &&
+      instance.provisionedConcurrency > 0 &&
+      instance.concurrencyAutoscaling &&
+      ((typeof instance.concurrencyAutoscaling === 'boolean' &&
+        instance.concurrencyAutoscaling) ||
+        (typeof instance.concurrencyAutoscaling === 'object' &&
+          instance.concurrencyAutoscaling.enabled === true))
+    )
   }
 
   getFunctions(): AutoscalingConfig[] {

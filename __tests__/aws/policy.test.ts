@@ -94,9 +94,9 @@ describe('Policy', () => {
       },
     })
 
-    const policyConfiguration = policy.toJSON()
-      .FoosvcFooAutoScalingPolicyDevUsfoo2.Properties
-      .TargetTrackingScalingPolicyConfiguration
+    const policyConfiguration =
+      policy.toJSON().FoosvcFooAutoScalingPolicyDevUsfoo2.Properties
+        .TargetTrackingScalingPolicyConfiguration
 
     expect(policyConfiguration).toHaveProperty(
       'CustomizedMetricSpecification',
@@ -126,9 +126,9 @@ describe('Policy', () => {
       },
     })
 
-    const policyConfiguration = policy.toJSON()
-      .FoosvcFooAutoScalingPolicyDevUsfoo2.Properties
-      .TargetTrackingScalingPolicyConfiguration
+    const policyConfiguration =
+      policy.toJSON().FoosvcFooAutoScalingPolicyDevUsfoo2.Properties
+        .TargetTrackingScalingPolicyConfiguration
 
     expect(policyConfiguration).toHaveProperty(
       'CustomizedMetricSpecification',

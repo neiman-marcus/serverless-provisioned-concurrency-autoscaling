@@ -1,6 +1,6 @@
 {
   "name": "serverless-provisioned-concurrency-autoscaling",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Serverless Plugin for AWS Lambdas Provisioned Concurrency Auto Scaling Configuration.",
   "main": "./lib/index.js",
   "files": [
@@ -50,8 +50,6 @@
   "homepage": "https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling#readme",
   "devDependencies": {
     "@types/jest": "^27.4.0",
-    "@types/lodash": "^4.14.178",
-    "@types/md5": "^2.3.2",
     "@types/node": "^17.0.17",
     "@types/serverless": "^1.78.44",
     "@typescript-eslint/eslint-plugin": "^3.8.0",
