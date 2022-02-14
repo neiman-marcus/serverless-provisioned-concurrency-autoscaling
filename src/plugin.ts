@@ -205,16 +205,15 @@ export default class Plugin {
     return true
   }
 
-  async beforeDeployResources(): Promise<unknown> {
+  async beforeDeployResources(): Promise<void> {
     try {
-      await Promise.resolve()
       const pcFunctions = this.getFunctions()
       this.validate(pcFunctions)
       this.serverless.cli.log(util.format(text.CLI_START))
       this.process(pcFunctions)
-      return this.serverless.cli.log(util.format(text.CLI_DONE))
+      this.serverless.cli.log(util.format(text.CLI_DONE))
     } catch (err) {
-      return this.serverless.cli.log(util.format(text.CLI_SKIP, err.message))
+      this.serverless.cli.log(util.format(text.CLI_SKIP, err.message))
     }
   }
 }
