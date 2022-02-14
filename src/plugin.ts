@@ -174,7 +174,9 @@ export default class Plugin {
   getFunctions(): AutoscalingConfig[] {
     const pcFunctions: AutoscalingConfig[] = []
 
-    this.serverless.service.getAllFunctions().forEach((functionName) => {
+    const allFunctions = this.serverless.service.getAllFunctions()
+
+    allFunctions.forEach((functionName: string) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const instance: any = this.serverless.service.getFunction(functionName)
 
@@ -186,6 +188,7 @@ export default class Plugin {
         })
       }
     })
+    
     return pcFunctions
   }
 
