@@ -52,6 +52,6 @@ export const serverless: any = {
     }
   },
   configSchemaHandler: {
-    defineFunctionProperties: () => true,
+    defineFunctionProperties: (): boolean => true,
   },
 }
