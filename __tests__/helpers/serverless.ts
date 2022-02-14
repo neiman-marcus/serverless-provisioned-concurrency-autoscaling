@@ -51,4 +51,7 @@ export const serverless: any = {
       getStage: () => 'dev',
     }
   },
+  configSchemaHandler: {
+    defineFunctionProperties: () => true,
+  },
 }
