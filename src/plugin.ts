@@ -10,7 +10,6 @@ import {
   ConcurrencyFunction,
   Options,
   CustomMetricConfig,
-  Dimension,
 } from './@types'
 
 const text = {
@@ -66,51 +65,29 @@ export default class Plugin {
   }
 
   defaults(config: AutoscalingConfig): AutoscalingConfig {
-    const customMetricConfig = config.customMetric
-      ? {
-          customMetric: this.customMetricDefaults(
-            config.customMetric,
-            config.name,
-            config.alias,
-          ),
-        }
-      : {}
+    const alias = config.alias || 'provisioned'
 
-    return {
-      maximum: config.maximum || 10,
-      minimum: config.minimum || 1,
-      scaleInCooldown: config.scaleInCooldown || 120,
-      scaleOutCooldown: config.scaleOutCooldown || 0,
-      usage: config.usage || 0.75,
-      function: config.function,
-      name: config.name,
-      alias: config.alias || 'provisioned',
-      ...customMetricConfig,
-    }
-  }
-
-  customMetricDefaults(
-    customMetric: CustomMetricConfig,
-    functionName: string,
-    alias: AutoscalingConfig['alias'],
-  ): CustomMetricConfig {
-    const defaultDimensions: Dimension[] = [
-      {
-        name: 'FunctionName',
-        value: functionName,
-      },
-      {
-        name: 'Resource',
-        value: `${functionName}:${alias}`,
-      },
-    ]
-
-    return {
-      dimensions: defaultDimensions,
+    const customMetricConfig: CustomMetricConfig = {
       metricName: 'ProvisionedConcurrencyUtilization',
       namespace: 'AWS/Lambda',
-      statistic: customMetric.statistic || 'Maximum',
+      statistic: config.customMetric?.statistic || 'Maximum',
       unit: 'Count',
+      dimensions: [
+        { name: 'FunctionName', value: config.name },
+        { name: 'Resource', value: `${config.name}:${alias}` },
+      ],
+    }
+
+    return {
+      alias,
+      name: config.name,
+      function: config.function,
+      usage: config.usage || 0.75,
+      minimum: config.minimum || 1,
+      maximum: config.maximum || 10,
+      scaleInCooldown: config.scaleInCooldown || 120,
+      scaleOutCooldown: config.scaleOutCooldown || 0,
+      customMetric: config.customMetric ? customMetricConfig : undefined,
     }
   }
 
@@ -188,7 +165,7 @@ export default class Plugin {
         })
       }
     })
-    
+
     return pcFunctions
   }
 
