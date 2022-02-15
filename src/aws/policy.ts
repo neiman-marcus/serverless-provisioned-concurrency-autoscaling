@@ -3,7 +3,7 @@ import {
   Options,
   AutoscalingConfig,
   CustomMetricConfig,
-} from 'src/@types/types'
+} from 'src/@types'
 import { ucfirst } from '../utility'
 
 export default class Policy {

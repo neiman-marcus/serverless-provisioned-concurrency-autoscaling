@@ -1,4 +1,4 @@
-import { AutoscalingConfig, ScalableTargetAction, ScheduledAction } from '../../src/@types/types'
+import { AutoscalingConfig, ScalableTargetAction, ScheduledAction } from '../../src/@types'
 
 export const configMin: AutoscalingConfig = {
   function: 'foo',

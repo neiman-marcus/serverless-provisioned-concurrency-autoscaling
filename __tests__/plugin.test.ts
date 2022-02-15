@@ -15,7 +15,7 @@ import {
   expectedTarget,
   expectedTargetWithSingleScheduledAction
 } from './helpers/target'
-import { ConcurrencyFunction } from 'src/@types/types'
+import { ConcurrencyFunction } from 'src/@types'
 
 const plugin = new Plugin(serverless)
 
