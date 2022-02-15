@@ -1,4 +1,4 @@
-import { ScalableTargetAction, ScheduledAction } from "../../src/@types/types";
+import { ScalableTargetAction, ScheduledAction } from '../../src/@types';
 
 export const expectedTarget = {
   FoosvcFooAutoScalingTargetDevUsfoo2: {
@@ -34,7 +34,7 @@ export const expectedTargetWithSingleScheduledAction = {
       ScheduledActions: [
         {
           ScheduledActionName: 'scheduledActionName1st',
-          Schedule: "cron(* 30 8 * * *)",
+          Schedule: 'cron(* 30 8 * * *)',
           ScalableTargetAction: {
             MinCapacity: 14
           }
@@ -63,7 +63,7 @@ export const expectedTargetWithScheduledActions = {
           ScheduledActionName: 'scheduledActionsName1st',
           EndTime: '2025-12-31T23:59:59.999Z',
           Timezone: 'CST',
-          Schedule: "cron(* 30 8 * * *)",
+          Schedule: 'cron(* 30 8 * * *)',
           ScalableTargetAction: {
             MinCapacity: 10
           }
@@ -71,7 +71,7 @@ export const expectedTargetWithScheduledActions = {
         {
           ScheduledActionName: 'scheduledActionsName2nd',
           StartTime: '2025-01-01T00:00:00.000Z',
-          Schedule: "cron(* 30 17 * * *)",
+          Schedule: 'cron(* 30 17 * * *)',
           ScalableTargetAction: {
             MinCapacity: 2,
             MaxCapacity: 11
