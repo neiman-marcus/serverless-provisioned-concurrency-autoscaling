@@ -15,7 +15,7 @@ export default class Target {
     this.name = new Name(options)
   }
 
-  getSchedulesActions(): unknown[] {
+  private getSchedulesActions(): unknown[] {
     return this.data.scheduledActions?.map(scheduledAction => { return {
         EndTime: scheduledAction.endTime,
         StartTime: scheduledAction.startTime,
