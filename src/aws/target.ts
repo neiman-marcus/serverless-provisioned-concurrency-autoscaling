@@ -16,8 +16,6 @@ export default class Target {
   }
 
   getSchedulesActions(): unknown[] {
-    console.log('--- scheduledActions generation ---')
-    console.log(JSON.stringify(this.data))
     return this.data.scheduledActions?.map(scheduledAction => { return {
         EndTime: scheduledAction.endTime,
         StartTime: scheduledAction.startTime,
@@ -38,8 +36,6 @@ export default class Target {
       this.dependencies,
     )
 
-    const ScheduledActions = this.getSchedulesActions()
-
     return {
       [nameTarget]: {
         DependsOn,
@@ -52,7 +48,9 @@ export default class Target {
           RoleARN: {
             'Fn::Sub': 'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
           },
-          ScheduledActions
+          ScheduledActions: this.data.scheduledActions
+            ? this.getSchedulesActions()
+            : undefined
         },
         Type: 'AWS::ApplicationAutoScaling::ScalableTarget',
       },
