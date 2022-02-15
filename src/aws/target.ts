@@ -1,5 +1,5 @@
 import Name from '../name'
-import { Options, AutoscalingConfig } from 'src/@types/types'
+import { Options, AutoscalingConfig } from 'src/@types'
 
 export default class Target {
   data: AutoscalingConfig

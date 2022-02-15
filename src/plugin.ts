@@ -10,8 +10,7 @@ import {
   ConcurrencyFunction,
   Options,
   CustomMetricConfig,
-  Dimension,
-} from './@types/types'
+} from './@types'
 
 const text = {
   CLI_DONE: 'Added Provisioned Concurrency Auto Scaling to CloudFormation!',
@@ -66,51 +65,29 @@ export default class Plugin {
   }
 
   defaults(config: AutoscalingConfig): AutoscalingConfig {
-    const customMetricConfig = config.customMetric
-      ? {
-          customMetric: this.customMetricDefaults(
-            config.customMetric,
-            config.name,
-            config.alias,
-          ),
-        }
-      : {}
+    const alias = config.alias || 'provisioned'
 
-    return {
-      maximum: config.maximum || 10,
-      minimum: config.minimum || 1,
-      scaleInCooldown: config.scaleInCooldown || 120,
-      scaleOutCooldown: config.scaleOutCooldown || 0,
-      usage: config.usage || 0.75,
-      function: config.function,
-      name: config.name,
-      alias: config.alias || 'provisioned',
-      ...customMetricConfig,
-    }
-  }
-
-  customMetricDefaults(
-    customMetric: CustomMetricConfig,
-    functionName: string,
-    alias: AutoscalingConfig['alias'],
-  ): CustomMetricConfig {
-    const defaultDimensions: Dimension[] = [
-      {
-        name: 'FunctionName',
-        value: functionName,
-      },
-      {
-        name: 'Resource',
-        value: `${functionName}:${alias}`,
-      },
-    ]
-
-    return {
-      dimensions: defaultDimensions,
+    const customMetricConfig: CustomMetricConfig = {
       metricName: 'ProvisionedConcurrencyUtilization',
       namespace: 'AWS/Lambda',
-      statistic: customMetric.statistic || 'Maximum',
+      statistic: config.customMetric?.statistic || 'Maximum',
       unit: 'Count',
+      dimensions: [
+        { name: 'FunctionName', value: config.name },
+        { name: 'Resource', value: `${config.name}:${alias}` },
+      ],
+    }
+
+    return {
+      alias,
+      name: config.name,
+      function: config.function,
+      usage: config.usage || 0.75,
+      minimum: config.minimum || 1,
+      maximum: config.maximum || 10,
+      scaleInCooldown: config.scaleInCooldown || 120,
+      scaleOutCooldown: config.scaleOutCooldown || 0,
+      customMetric: config.customMetric ? customMetricConfig : undefined,
     }
   }
 
@@ -174,7 +151,9 @@ export default class Plugin {
   getFunctions(): AutoscalingConfig[] {
     const pcFunctions: AutoscalingConfig[] = []
 
-    this.serverless.service.getAllFunctions().forEach((functionName) => {
+    const allFunctions = this.serverless.service.getAllFunctions()
+
+    allFunctions.forEach((functionName: string) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const instance: any = this.serverless.service.getFunction(functionName)
 
@@ -186,6 +165,7 @@ export default class Plugin {
         })
       }
     })
+
     return pcFunctions
   }
 
@@ -205,16 +185,15 @@ export default class Plugin {
     return true
   }
 
-  async beforeDeployResources(): Promise<unknown> {
+  async beforeDeployResources(): Promise<void> {
     try {
-      await Promise.resolve()
       const pcFunctions = this.getFunctions()
       this.validate(pcFunctions)
       this.serverless.cli.log(util.format(text.CLI_START))
       this.process(pcFunctions)
-      return this.serverless.cli.log(util.format(text.CLI_DONE))
+      this.serverless.cli.log(util.format(text.CLI_DONE))
     } catch (err) {
-      return this.serverless.cli.log(util.format(text.CLI_SKIP, err.message))
+      this.serverless.cli.log(util.format(text.CLI_SKIP, err.message))
     }
   }
 }

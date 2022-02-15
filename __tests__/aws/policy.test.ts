@@ -1,5 +1,5 @@
 import Policy from '../../src/aws/policy'
-import { Options } from 'src/@types/types'
+import { Options } from 'src/@types'
 import { expectedPolicy } from '../helpers/policy'
 
 const options: Options = {

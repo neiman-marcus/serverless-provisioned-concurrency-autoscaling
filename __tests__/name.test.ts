@@ -1,5 +1,5 @@
 import Name from '../src/name'
-import { Options } from 'src/@types/types'
+import { Options } from 'src/@types'
 
 const NameConstructor = () => {
   const options: Options = {
