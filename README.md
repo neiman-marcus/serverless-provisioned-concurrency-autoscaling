@@ -60,20 +60,36 @@ functions:
       scheduledActions:
         - name: OpenOfficeTime
           startTime: "2025-01-01T00:00:00.000Z"
-          endTime: "2025-12-31T23:59:59.999Z"
+          endTime: "2025-01-01T23:59:59.999Z"
           timezone: CST
-          schedule: "cron(* 30 8 * 1-6 *)"
+          schedule: "cron(30 8 ? * 1-6 *)"
           action:
             maximum: 100
             minimum: 10
         - name: CloseOfficeTime
           startTime: "2025-01-01T00:00:00.000Z"
-          endTime: "2025-12-31T23:59:59.999Z"
+          endTime: "2025-01-01T23:59:59.999Z"
           timezone: CST
-          schedule: "cron(* 30 17 * 1-6 *)"
+          schedule: "cron(30 17 ? * 1-6 *)"
           action:
             maximum: 10
             minimum: 1
+        - name: BlackFridayPeak
+          startTime: "2025-11-28T00:00:00.000Z"
+          endTime: "2025-11-28T23:59:59.999Z"
+          timezone: CST
+          schedule: "at(???)"
+          action:
+            maximum: 50
+            minimum: 5
+        - name: BlackFridayPeak
+          startTime: "2025-11-28T00:00:00.000Z"
+          endTime: "2025-11-28T23:59:59.999Z"
+          timezone: CST
+          schedule: "rate(???)"
+          action:
+            maximum: 50
+            minimum: 5
 ```
 
 That's it! With the next deployment, [serverless](https://serverless.com) will add Cloudformation resources to scale provisioned concurrency!
@@ -109,13 +125,14 @@ For more details on Scheduled Actions formats see
 
 #### Description of `schedule`'s properties:
 
-Only one at a time can be specified. For more details on schedule syntax see
-[the AWS CloudFormation ScheduledAction description](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-applicationautoscaling-scalabletarget-scheduledaction.html).
+For more details on schedule syntax see:
+ * [AWS CloudFormation ScheduledAction description](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-applicationautoscaling-scalabletarget-scheduledaction.html)
+ * [AWS Schedule Expressions for Rules](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html)
 
 | Attribute | Description                          | Format                    | Example                   |
 |-----------|--------------------------------------|---------------------------|---------------------------|
-| at        | A start                              | `at(yyyy-mm-ddThh:mm:ss)` | `at(2025-01-02T00:00:00)` |
-| cron      | A cron syntax for recurring schedule | `cron(fields)`            | `cron(* 30 17 * 1-6 *)`   |
+| at        | A start (a point in time)            | `at(yyyy-mm-ddThh:mm:ss)` | `at(2025-01-02T00:00:00)` |
+| cron      | A cron syntax for recurring schedule | `cron(fields)`            | `cron(30 17 ? * 1-6 *)`   |
 | rate      | A rate                               | `rate(value unit)`        | `rate(16 minuets)`        |
 
 ## Known Issues/Limitations
