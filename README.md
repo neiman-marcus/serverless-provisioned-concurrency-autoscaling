@@ -75,18 +75,18 @@ functions:
             maximum: 10
             minimum: 1
         - name: BlackFridayPeak
-          startTime: "2025-11-28T00:00:00.000Z"
-          endTime: "2025-11-28T23:59:59.999Z"
+          startTime: "2025-01-02T00:00:00.000Z"
+          endTime: "2025-01-02T23:59:59.999Z"
           timezone: CST
-          schedule: "at(???)"
+          schedule: "at(2025-01-02T12:34:56)"
           action:
             maximum: 50
             minimum: 5
         - name: BlackFridayPeak
-          startTime: "2025-11-28T00:00:00.000Z"
-          endTime: "2025-11-28T23:59:59.999Z"
+          startTime: "2025-01-03T00:00:00.000Z"
+          endTime: "2025-01-03T23:59:59.999Z"
           timezone: CST
-          schedule: "rate(???)"
+          schedule: "rate(1 hour)"
           action:
             maximum: 50
             minimum: 5
