@@ -24,7 +24,7 @@ export default class Target {
           MaxCapacity: scheduledAction.action.maximum,
           MinCapacity: scheduledAction.action.minimum
         },
-        ScheduledActionName: scheduledAction.name,
+        ScheduledActionName: scheduledAction.name, // todo: names cannot be duplicated; add validation
         Schedule: scheduledAction.schedule
     }}) as unknown[]
   }

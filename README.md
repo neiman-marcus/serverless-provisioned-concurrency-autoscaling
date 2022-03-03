@@ -74,7 +74,7 @@ functions:
           action:
             maximum: 10
             minimum: 1
-        - name: BlackFridayPeak
+        - name: BlackFridayPeak1
           startTime: "2025-01-02T00:00:00.000Z"
           endTime: "2025-01-02T23:59:59.999Z"
           timezone: CST
@@ -82,7 +82,7 @@ functions:
           action:
             maximum: 50
             minimum: 5
-        - name: BlackFridayPeak
+        - name: BlackFridayPeak2
           startTime: "2025-01-03T00:00:00.000Z"
           endTime: "2025-01-03T23:59:59.999Z"
           timezone: CST
@@ -114,20 +114,21 @@ For more details on Scheduled Actions formats see
 
 #### Description of `scheduledActions`'s properties:
 
-| Attribute | Description                                                                                                 | Required | Example                            |
-|-----------|-------------------------------------------------------------------------------------------------------------|----------|------------------------------------|
-| endTime   | The date and time that the action is scheduled to end, in UTC.                                              | no       | `2025-12-31T23:59:59.999Z`         |
-| startTime | The date and time that the action is scheduled to begin, in UTC.                                            | no       | `2025-01-01T00:00:00.000Z`         |
-| timezone  | Timezone for `startTime` and `endTime`.                                                                     | no       | `CST`                              |
-| name      | The name of the scheduled action unique among all other scheduled actions on the specified scalable target. | yes      | `OpenOfficeHourScheduleStart`      |
-| schedule  | One of three string formats: `at`, `cron` or `rate` (see next table).                                       | yes      | `cron(* 30 8 * 1-6 *)`             |
-| action    | Object of `minimum` and `maximum` properties. At least one is required.                                     | yes      | `minimum: 100` <br> `maximum: 105` |
+| Attribute | Description                                                                                                   | Required | Example                          |
+|-----------|---------------------------------------------------------------------------------------------------------------|----------|----------------------------------|
+| endTime   | The date and time that the action is scheduled to end, in UTC.                                                | no       | `2025-12-31T23:59:59.999Z`       |
+| startTime | The date and time that the action is scheduled to begin, in UTC.                                              | no       | `2025-01-01T00:00:00.000Z`       |
+| timezone  | Timezone for `startTime` and `endTime`. Needs to be the canonical names of the IANA (supported by Yoda-Time). | no       | `America/Chicago`                |
+| name      | The name of the scheduled action unique among all other scheduled actions on the specified scalable target.   | yes      | `OpenOfficeHourScheduleStart`    |
+| schedule  | One of three string formats: `at`, `cron` or `rate` (see next table).                                         | yes      | `cron(* 30 8 * 1-6 *)`           |
+| action    | Object of `minimum` and `maximum` properties. At least one is required.                                       | yes      | `minimum: 100`<br>`maximum: 105` |
 
 #### Description of `schedule`'s properties:
 
 For more details on schedule syntax see:
  * [AWS CloudFormation ScheduledAction description](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-applicationautoscaling-scalabletarget-scheduledaction.html)
- * [AWS Schedule Expressions for Rules](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html)
+ * [AWS Schedule Expressions for Rules](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html) (cron)
+ * [AWS Put Scheduled Action - Timezone](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_PutScheduledAction.html#API_PutScheduledAction_RequestSyntax)
 
 | Attribute | Description                          | Format                    | Example                   |
 |-----------|--------------------------------------|---------------------------|---------------------------|
