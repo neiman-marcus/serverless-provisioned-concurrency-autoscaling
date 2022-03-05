@@ -62,8 +62,8 @@ export const expectedTargetWithScheduledActions = {
         {
           ScheduledActionName: 'scheduledActionsName1st',
           EndTime: '2025-12-31T23:59:59.999Z',
-          Timezone: 'CST',
-          Schedule: 'cron(* 30 8 * * *)',
+          Timezone: 'America/Chicago',
+          Schedule: 'cron(30 8 ? * 1-6 *)',
           ScalableTargetAction: {
             MinCapacity: 10
           }
@@ -71,7 +71,7 @@ export const expectedTargetWithScheduledActions = {
         {
           ScheduledActionName: 'scheduledActionsName2nd',
           StartTime: '2025-01-01T00:00:00.000Z',
-          Schedule: 'cron(* 30 17 * * *)',
+          Schedule: 'cron(30 17 ? * 1-6 *)',
           ScalableTargetAction: {
             MinCapacity: 2,
             MaxCapacity: 11
@@ -102,8 +102,8 @@ export const scheduledActions: ScheduledAction[] = [
   {
     name: 'scheduledActionsName1st',
     endTime: '2025-12-31T23:59:59.999Z',
-    timezone: 'CST',
-    schedule: 'cron(* 30 8 * * *)',
+    timezone: 'America/Chicago',
+    schedule: 'cron(30 8 ? * 1-6 *)',
     action: {
       minimum: 10
     } as ScalableTargetAction
@@ -111,7 +111,7 @@ export const scheduledActions: ScheduledAction[] = [
   {
     name: 'scheduledActionsName2nd',
     startTime: '2025-01-01T00:00:00.000Z',
-    schedule: 'cron(* 30 17 * * *)',
+    schedule: 'cron(30 17 ? * 1-6 *)',
     action: {
       minimum: 2,
       maximum: 11
