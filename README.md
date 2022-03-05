@@ -61,7 +61,7 @@ functions:
         - name: OpenOfficeTime
           startTime: "2025-01-01T00:00:00.000Z"
           endTime: "2025-01-01T23:59:59.999Z"
-          timezone: CST
+          timezone: "America/Chicago"
           schedule: "cron(30 8 ? * 1-6 *)"
           action:
             maximum: 100
@@ -69,7 +69,7 @@ functions:
         - name: CloseOfficeTime
           startTime: "2025-01-01T00:00:00.000Z"
           endTime: "2025-01-01T23:59:59.999Z"
-          timezone: CST
+          timezone: "America/Chicago"
           schedule: "cron(30 17 ? * 1-6 *)"
           action:
             maximum: 10
@@ -77,7 +77,7 @@ functions:
         - name: BlackFridayPeak1
           startTime: "2025-01-02T00:00:00.000Z"
           endTime: "2025-01-02T23:59:59.999Z"
-          timezone: CST
+          timezone: "America/New_York"
           schedule: "at(2025-01-02T12:34:56)"
           action:
             maximum: 50
@@ -85,7 +85,7 @@ functions:
         - name: BlackFridayPeak2
           startTime: "2025-01-03T00:00:00.000Z"
           endTime: "2025-01-03T23:59:59.999Z"
-          timezone: CST
+          timezone: "Europe/Warsaw"
           schedule: "rate(1 hour)"
           action:
             maximum: 50
