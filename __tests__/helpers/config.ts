@@ -53,7 +53,7 @@ export const configScheduledActions: AutoscalingConfig = {
   scheduledActions: [
     {
       name: 'scheduledActionName1st',
-      schedule: 'cron(* 30 8 * * *)',
+      schedule: 'cron(30 8 ? * 1-6 *)',
       action: {
         minimum: 14
       } as ScalableTargetAction

@@ -34,7 +34,7 @@ export const expectedTargetWithSingleScheduledAction = {
       ScheduledActions: [
         {
           ScheduledActionName: 'scheduledActionName1st',
-          Schedule: 'cron(* 30 8 * * *)',
+          Schedule: 'cron(30 8 ? * 1-6 *)',
           ScalableTargetAction: {
             MinCapacity: 14
           }
