@@ -88,6 +88,7 @@ export default class Plugin {
       scaleInCooldown: config.scaleInCooldown || 120,
       scaleOutCooldown: config.scaleOutCooldown || 0,
       customMetric: config.customMetric ? customMetricConfig : undefined,
+      scheduledActions: config.scheduledActions
     }
   }
 

@@ -1,8 +1,8 @@
 import Target from '../../src/aws/target'
 import { Options, AutoscalingConfig } from 'src/@types'
-import { expectedTarget } from '../helpers/target'
+import { expectedTarget, expectedTargetWithScheduledActions, scheduledActions } from '../helpers/target'
 
-const TargetConstructor = () => {
+describe('Target', (): void => {
   const options: Options = {
     region: 'us-foo-2',
     service: 'foo-svc',
@@ -17,12 +17,17 @@ const TargetConstructor = () => {
     minimum: 1,
   }
 
-  return new Target(options, data)
-}
-
-describe('Target', () => {
-  it('construct target object', () => {
-    const target = TargetConstructor()
+  it('construct target object', (): void => {
+    const target = new Target(options, data)
     expect(target.toJSON()).toEqual(expectedTarget)
+  })
+
+  it('construct target object with scheduled actions', (): void => {
+    const dataWithScheduledAction: AutoscalingConfig = {
+      ...data,
+      scheduledActions
+    }
+    const target = new Target(options, dataWithScheduledAction)
+    expect(target.toJSON()).toEqual(expectedTargetWithScheduledActions)
   })
 })

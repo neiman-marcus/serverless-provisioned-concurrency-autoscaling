@@ -1,4 +1,4 @@
-import { AutoscalingConfig } from '../../src/@types'
+import { AutoscalingConfig, ScalableTargetAction, ScheduledAction } from '../../src/@types'
 
 export const configMin: AutoscalingConfig = {
   function: 'foo',
@@ -46,4 +46,17 @@ export const configCustomMetricDefault: AutoscalingConfig = {
     statistic: 'maximum',
     unit: 'Count',
   },
+}
+
+export const configScheduledActions: AutoscalingConfig = {
+  ...configMin,
+  scheduledActions: [
+    {
+      name: 'scheduledActionName1st',
+      schedule: 'cron(30 8 ? * 1-6 *)',
+      action: {
+        minimum: 14
+      } as ScalableTargetAction
+    } as ScheduledAction
+  ] as ScheduledAction[]
 }

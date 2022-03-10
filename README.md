@@ -57,11 +57,44 @@ functions:
       scaleOutCooldown: 0
       customMetric:
         statistic: maximum
+      scheduledActions:
+        - name: OpenOfficeTime
+          startTime: "2025-01-01T00:00:00.000Z"
+          endTime: "2025-01-01T23:59:59.999Z"
+          timezone: "America/Chicago"
+          schedule: "cron(30 8 ? * 1-6 *)"
+          action:
+            maximum: 100
+            minimum: 10
+        - name: CloseOfficeTime
+          startTime: "2025-01-01T00:00:00.000Z"
+          endTime: "2025-01-01T23:59:59.999Z"
+          timezone: "America/Chicago"
+          schedule: "cron(30 17 ? * 1-6 *)"
+          action:
+            maximum: 10
+            minimum: 1
+        - name: BlackFridayPeak1
+          startTime: "2025-01-02T00:00:00.000Z"
+          endTime: "2025-01-02T23:59:59.999Z"
+          timezone: "America/New_York"
+          schedule: "at(2025-01-02T12:34:56)"
+          action:
+            maximum: 50
+            minimum: 5
+        - name: BlackFridayPeak2
+          startTime: "2025-01-03T00:00:00.000Z"
+          endTime: "2025-01-03T23:59:59.999Z"
+          timezone: "Europe/Warsaw"
+          schedule: "rate(1 hour)"
+          action:
+            maximum: 50
+            minimum: 5
 ```
 
 That's it! With the next deployment, [serverless](https://serverless.com) will add Cloudformation resources to scale provisioned concurrency!
 
-You must provide atleast `provisionedConcurrency` and `concurrencyAutoscaling` to enable autoscaling. Set `concurrencyAutoscaling` to a boolean, or object with configuration. Any omitted configuration will use module defaults.
+You must provide at least `provisionedConcurrency` and `concurrencyAutoscaling` to enable autoscaling. Set `concurrencyAutoscaling` to a boolean, or object with configuration. Any omitted configuration will use module defaults.
 
 ### Defaults
 
@@ -74,6 +107,35 @@ scaleInCooldown: 120
 scaleOutCooldown: 0
 ```
 
+### Scheduled Actions
+
+For more details on Scheduled Actions formats see
+[the AWS CloudFormation ScheduledAction description](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-applicationautoscaling-scalabletarget-scheduledaction.html). 
+
+#### Description of `scheduledActions`'s properties:
+
+| Attribute | Description                                                                                                   | Required | Example                          |
+|-----------|---------------------------------------------------------------------------------------------------------------|----------|----------------------------------|
+| endTime   | The date and time that the action is scheduled to end, in UTC.                                                | no       | `2025-12-31T23:59:59.999Z`       |
+| startTime | The date and time that the action is scheduled to begin, in UTC.                                              | no       | `2025-01-01T00:00:00.000Z`       |
+| timezone  | Timezone for `startTime` and `endTime`. Needs to be the canonical names of the IANA (supported by Yoda-Time). | no       | `America/Chicago`                |
+| name      | The name of the scheduled action unique among all other scheduled actions on the specified scalable target.   | yes      | `OpenOfficeHourScheduleStart`    |
+| schedule  | One of three string formats: `at`, `cron` or `rate` (see next table).                                         | yes      | `cron(* 30 8 * 1-6 *)`           |
+| action    | Object of `minimum` and `maximum` properties. At least one is required.                                       | yes      | `minimum: 100`<br>`maximum: 105` |
+
+#### Description of `schedule`'s properties:
+
+For more details on schedule syntax see:
+ * [AWS CloudFormation ScheduledAction description](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-applicationautoscaling-scalabletarget-scheduledaction.html)
+ * [AWS Schedule Expressions for Rules](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html) (cron)
+ * [AWS Put Scheduled Action - Timezone](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_PutScheduledAction.html#API_PutScheduledAction_RequestSyntax)
+
+| Attribute | Description                          | Format                    | Example                   |
+|-----------|--------------------------------------|---------------------------|---------------------------|
+| at        | A start (a point in time)            | `at(yyyy-mm-ddThh:mm:ss)` | `at(2025-01-02T00:00:00)` |
+| cron      | A cron syntax for recurring schedule | `cron(fields)`            | `cron(30 17 ? * 1-6 *)`   |
+| rate      | A rate                               | `rate(value unit)`        | `rate(16 minuets)`        |
+
 ## Known Issues/Limitations
 
 N/A
@@ -81,6 +143,7 @@ N/A
 ## Authors
 
 - [Clay Danford](mailto:crd013@gmail.com)
+- [Dawid Boissé](mailto:dawid.boisse@gmail.com)
 
 ## Conduct / Contributing / License
 
