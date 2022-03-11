@@ -12,7 +12,7 @@ export const expectedPolicy = {
         PredefinedMetricSpecification: {
           PredefinedMetricType: 'LambdaProvisionedConcurrencyUtilization',
         },
-        ScaleInCooldown: 120,
+        ScaleInCooldown: 0,
         ScaleOutCooldown: 0,
         TargetValue: 0.75,
       },

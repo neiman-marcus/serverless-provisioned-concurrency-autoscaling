@@ -21,7 +21,7 @@ export const configDefault: AutoscalingConfig = {
   minimum: 1,
   maximum: 10,
   usage: 0.75,
-  scaleInCooldown: 120,
+  scaleInCooldown: 0,
   scaleOutCooldown: 0,
   alias: 'provisioned',
 }

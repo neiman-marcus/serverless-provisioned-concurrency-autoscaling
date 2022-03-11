@@ -88,7 +88,7 @@ export default class Plugin {
       scaleInCooldown:
         typeof config.scaleInCooldown !== 'undefined'
           ? config.scaleInCooldown
-          : 120,
+          : 0,
       scaleOutCooldown:
         typeof config.scaleOutCooldown !== 'undefined'
           ? config.scaleOutCooldown

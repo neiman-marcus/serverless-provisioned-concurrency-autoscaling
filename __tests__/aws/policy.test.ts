@@ -13,7 +13,7 @@ describe('Policy', () => {
     const policy = new Policy(options, {
       function: 'foo',
       name: 'foo-svc-dev-foo',
-      scaleInCooldown: 120,
+      scaleInCooldown: 0,
       scaleOutCooldown: 0,
       usage: 0.75,
     })
