@@ -6,14 +6,15 @@ import {
   configPartial,
   configCustomMetricDefault,
   configCustomMetricMin,
-  configScheduledActions
+  configScheduledActions,
+  configZero,
 } from './helpers/config'
 import { serverless } from './helpers/serverless'
 import { options } from './helpers/options'
 import { expectedPolicy } from './helpers/policy'
 import {
   expectedTarget,
-  expectedTargetWithSingleScheduledAction
+  expectedTargetWithSingleScheduledAction,
 } from './helpers/target'
 import { ConcurrencyFunction } from 'src/@types'
 
@@ -35,6 +36,10 @@ describe('Defaults', () => {
       ...configDefault,
       ...configPartial,
     })
+  })
+
+  it('should allow zero', () => {
+    expect(plugin.defaults(configZero).scaleInCooldown).toEqual(0)
   })
 
   it('should set custom metric config defaults', () => {
@@ -154,20 +159,22 @@ describe('Process', () => {
   it('Process for cloudformation object', () => {
     plugin.process([configDefault])
     expect(
-      plugin.serverless.service.provider.compiledCloudFormationTemplate.Resources
+      plugin.serverless.service.provider.compiledCloudFormationTemplate
+        .Resources,
     ).toEqual({
       ...expectedPolicy,
-      ...expectedTarget
+      ...expectedTarget,
     })
   })
 
   it('Process for CloudFormation with Scheduled Actions', (): void => {
     plugin.process([configScheduledActions])
     expect(
-      plugin.serverless.service.provider.compiledCloudFormationTemplate.Resources
+      plugin.serverless.service.provider.compiledCloudFormationTemplate
+        .Resources,
     ).toEqual({
       ...expectedPolicy,
-      ...expectedTargetWithSingleScheduledAction
+      ...expectedTargetWithSingleScheduledAction,
     })
   })
 })
@@ -178,7 +185,8 @@ describe('BeforeDeployResources', () => {
 
     plugin.beforeDeployResources()
     expect(
-      plugin.serverless.service.provider.compiledCloudFormationTemplate.Resources,
+      plugin.serverless.service.provider.compiledCloudFormationTemplate
+        .Resources,
     ).toEqual({
       ...expectedPolicy,
       ...expectedTarget,
