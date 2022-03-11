@@ -15,30 +15,14 @@ export default class Name {
   }
 
   target(func: string): string {
-    return clean(this.build(TEXT.TARGET, func))
+    return clean(ucfirst(util.format(TEXT.TARGET, func)))
   }
 
   policy(func: string): string {
-    return clean(this.build(TEXT.POLICYSCALE, func))
+    return clean(ucfirst(util.format(TEXT.POLICYSCALE, func)))
   }
 
   PCAliasLogicalId(functionName: string): string {
     return `${normalize(functionName)}ProvConcLambdaAlias`
-  }
-
-  build(data: string, func: string): string {
-    return [
-      this.prefix(),
-      ucfirst(util.format(data, func)),
-      this.suffix(),
-    ].join('')
-  }
-
-  prefix(): string {
-    return ucfirst(this.options.service)
-  }
-
-  suffix(): string {
-    return [this.options.stage, this.options.region].map(ucfirst).join('')
   }
 }

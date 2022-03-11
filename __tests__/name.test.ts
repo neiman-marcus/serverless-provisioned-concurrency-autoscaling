@@ -15,28 +15,14 @@ const name = NameConstructor()
 
 describe('Name', () => {
   it('Should construct target resource id', () => {
-    expect(name.target('foo')).toEqual('FoosvcFooAutoScalingTargetDevUsfoo2')
+    expect(name.target('foo')).toEqual('FooAutoScalingTarget')
   })
 
   it('Should construct policy resource id', () => {
-    expect(name.policy('foo')).toEqual('FoosvcFooAutoScalingPolicyDevUsfoo2')
+    expect(name.policy('foo')).toEqual('FooAutoScalingPolicy')
   })
 
   it('Should construct alias name', () => {
     expect(name.PCAliasLogicalId('foo')).toEqual('FooProvConcLambdaAlias')
-  })
-
-  it('Should build string, without cleaning it', () => {
-    expect(name.build('%s-AutoScalingPolicy', 'foo')).toEqual(
-      'Foo-svcFoo-AutoScalingPolicyDevUs-foo-2',
-    )
-  })
-
-  it('Should ucfirst service', () => {
-    expect(name.prefix()).toEqual('Foo-svc')
-  })
-
-  it('Should return suffix with stage and region', () => {
-    expect(name.suffix()).toEqual('DevUs-foo-2')
   })
 })
