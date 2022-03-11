@@ -82,11 +82,17 @@ export default class Plugin {
       alias,
       name: config.name,
       function: config.function,
-      usage: config.usage || 0.75,
-      minimum: config.minimum || 1,
-      maximum: config.maximum || 10,
-      scaleInCooldown: config.scaleInCooldown || 120,
-      scaleOutCooldown: config.scaleOutCooldown || 0,
+      usage: typeof config.usage !== 'undefined' ? config.usage : 0.75,
+      minimum: typeof config.minimum !== 'undefined' ? config.minimum : 1,
+      maximum: typeof config.maximum !== 'undefined' ? config.maximum : 10,
+      scaleInCooldown:
+        typeof config.scaleInCooldown !== 'undefined'
+          ? config.scaleInCooldown
+          : 120,
+      scaleOutCooldown:
+        typeof config.scaleOutCooldown !== 'undefined'
+          ? config.scaleOutCooldown
+          : 0,
       customMetric: config.customMetric ? customMetricConfig : undefined,
       scheduledActions: config.scheduledActions,
     }
