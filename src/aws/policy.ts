@@ -1,9 +1,5 @@
 import Name from '../name'
-import {
-  Options,
-  AutoscalingConfig,
-  CustomMetricConfig,
-} from 'src/@types'
+import { Options, AutoscalingConfig, CustomMetricConfig } from 'src/@types'
 import { ucfirst } from '../utility'
 
 export default class Policy {
