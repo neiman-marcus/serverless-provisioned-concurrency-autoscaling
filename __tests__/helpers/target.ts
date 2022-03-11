@@ -1,7 +1,7 @@
 import { ScalableTargetAction, ScheduledAction } from '../../src/@types';
 
 export const expectedTarget = {
-  FoosvcFooAutoScalingTargetDevUsfoo2: {
+  FooAutoScalingTarget: {
     DependsOn: ['FooProvConcLambdaAlias'],
     Properties: {
       MaxCapacity: 10,
@@ -19,7 +19,7 @@ export const expectedTarget = {
 }
 
 export const expectedTargetWithSingleScheduledAction = {
-  FoosvcFooAutoScalingTargetDevUsfoo2: {
+  FooAutoScalingTarget: {
     DependsOn: ['FooProvConcLambdaAlias'],
     Properties: {
       MaxCapacity: 10,
@@ -46,7 +46,7 @@ export const expectedTargetWithSingleScheduledAction = {
 }
 
 export const expectedTargetWithScheduledActions = {
-  FoosvcFooAutoScalingTargetDevUsfoo2: {
+  FooAutoScalingTarget: {
     DependsOn: ['FooProvConcLambdaAlias'],
     Properties: {
       MaxCapacity: 10,
