@@ -11,12 +11,17 @@ export const configPartial: AutoscalingConfig = {
   usage: 0.92,
 }
 
+export const configZero: AutoscalingConfig = {
+  ...configMin,
+  scaleInCooldown: 0
+}
+
 export const configDefault: AutoscalingConfig = {
   ...configMin,
   minimum: 1,
   maximum: 10,
   usage: 0.75,
-  scaleInCooldown: 120,
+  scaleInCooldown: 0,
   scaleOutCooldown: 0,
   alias: 'provisioned',
 }

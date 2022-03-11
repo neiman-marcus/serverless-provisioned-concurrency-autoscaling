@@ -53,7 +53,7 @@ functions:
       maximum: 10
       minimum: 1
       usage: 0.75
-      scaleInCooldown: 120
+      scaleInCooldown: 0
       scaleOutCooldown: 0
       customMetric:
         statistic: maximum
@@ -103,9 +103,11 @@ alias: provisioned
 maximum: 10
 minimum: 1
 usage: 0.75
-scaleInCooldown: 120
+scaleInCooldown: 0
 scaleOutCooldown: 0
 ```
+
+**Change in Default Behavior:** Starting in v1.7.0, the default scaleInCooldown is zero, not 120. This is backwards compatible, but different default behavior. This is in line with AWS' default scaleInCooldown.
 
 ### Scheduled Actions
 
