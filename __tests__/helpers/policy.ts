@@ -1,13 +1,13 @@
 export const expectedPolicy = {
-  FooAutoScalingPolicy: {
+  FoosvcFooAutoScalingPolicyDevUsfoo2: {
     DependsOn: [
-      'FooAutoScalingTarget',
+      'FoosvcFooAutoScalingTargetDevUsfoo2',
       'FooProvConcLambdaAlias',
     ],
     Properties: {
-      PolicyName: 'FooAutoScalingPolicy',
+      PolicyName: 'FoosvcFooAutoScalingPolicyDevUsfoo2',
       PolicyType: 'TargetTrackingScaling',
-      ScalingTargetId: { Ref: 'FooAutoScalingTarget' },
+      ScalingTargetId: { Ref: 'FoosvcFooAutoScalingTargetDevUsfoo2' },
       TargetTrackingScalingPolicyConfiguration: {
         PredefinedMetricSpecification: {
           PredefinedMetricType: 'LambdaProvisionedConcurrencyUtilization',

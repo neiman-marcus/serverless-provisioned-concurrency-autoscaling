@@ -46,10 +46,10 @@ describe('Policy', () => {
     })
 
     const policyJson = policy.toJSON()
-    expect(policyJson).toHaveProperty('BarAutoScalingPolicy')
+    expect(policyJson).toHaveProperty('FoosvcBarAutoScalingPolicyDevUsfoo2')
 
     const policyProperties =
-      policyJson.BarAutoScalingPolicy.Properties
+      policyJson.FoosvcBarAutoScalingPolicyDevUsfoo2.Properties
     expect(policyProperties).toHaveProperty(
       'TargetTrackingScalingPolicyConfiguration',
       {
@@ -95,7 +95,7 @@ describe('Policy', () => {
     })
 
     const policyConfiguration =
-      policy.toJSON().FooAutoScalingPolicy.Properties
+      policy.toJSON().FoosvcFooAutoScalingPolicyDevUsfoo2.Properties
         .TargetTrackingScalingPolicyConfiguration
 
     expect(policyConfiguration).toHaveProperty(
@@ -127,7 +127,7 @@ describe('Policy', () => {
     })
 
     const policyConfiguration =
-      policy.toJSON().FooAutoScalingPolicy.Properties
+      policy.toJSON().FoosvcFooAutoScalingPolicyDevUsfoo2.Properties
         .TargetTrackingScalingPolicyConfiguration
 
     expect(policyConfiguration).toHaveProperty(
