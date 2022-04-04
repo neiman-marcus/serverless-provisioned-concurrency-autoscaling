@@ -65,3 +65,13 @@ export const configScheduledActions: AutoscalingConfig = {
     } as ScheduledAction
   ] as ScheduledAction[]
 }
+
+export const allConfigs = [
+  configMin,
+  configPartial,
+  configZero,
+  configDefault,
+  configCustomMetricMin,
+  configCustomMetricDefault,
+  configScheduledActions,
+] as AutoscalingConfig[]
