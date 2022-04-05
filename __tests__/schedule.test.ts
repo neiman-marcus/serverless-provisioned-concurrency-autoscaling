@@ -1,5 +1,5 @@
 import { allConfigs, configMin } from './helpers/config';
-import {AutoscalingConfig, ConcurrencyFunction, ScalableTargetAction, ScheduledAction} from '../src/@types';
+import { AutoscalingConfig, ConcurrencyFunction, ScalableTargetAction, ScheduledAction } from '../src/@types';
 import Ajv from 'ajv-draft-04';
 import { schema } from '../src/schema/schema';
 import {
@@ -40,7 +40,7 @@ describe('Schema Validation', (): void => {
       userDefinedConfig(true, 'scaleOutTest', 10, 1, 0.75, 0, 0),
       ...generateAllCustomStatisticsTestCases(),
       customScheduledActionsConfig([customScheduledAction()])
-    ])('All Test Configs are Valid', (
+    ])('All Test Configs Should be Valid', (
       config: AutoscalingConfig
     ): void => {
       const result = validate(functionConfig(config));
@@ -56,7 +56,30 @@ describe('Schema Validation', (): void => {
       action: ScalableTargetAction
     ): void => {
       const result = validate(schedulesActionConfig(action));
-      console.log(JSON.stringify(schedulesActionConfig(action)));
+      expect(result).toEqual(true);
+    });
+
+    const generateValidScheduleTestCases = (): AutoscalingConfig[] => {
+      const testCases: AutoscalingConfig[] = [];
+      const schedules = [
+        'rate(1 minute)', 'rate(2 minutes)', 'rate(42 minutes)',
+        'rate(1 hour)', 'rate(2 hours)', 'rate(42 hours)',
+        'rate(1 day)', 'rate(2 days)', 'rate(42 days)',
+        'at(2025-01-02T12:12:12)', 'at(2000-02-29T23:59:59)',
+        'cron(30 17 ? * 1-6 *)', 'cron(/ / / / # /)', 'cron(/ / L / L /)', 'cron(/ / W / L /)',
+        'cron(* * * * * *)', 'cron(* * ? * ? *)', 'cron(1 2 3 4 5 6)', 'cron(- - - - - -)', 'cron(, , , , , ,)',
+        'cron(1-2 2-3 3-4 4-5 5-6 6-7)'
+      ];
+
+      for (const schedule of schedules) {
+        testCases.push(customScheduledActionsConfig([customScheduledAction('name', schedule, { minimum: 1 } as ScalableTargetAction)]));
+      }
+
+      return testCases;
+    };
+
+    it.each(generateValidScheduleTestCases())('Positive Schedule Validation', (config: AutoscalingConfig): void => {
+      const result = validate(functionConfig(config));
       expect(result).toEqual(true);
     });
   });
@@ -148,6 +171,31 @@ describe('Schema Validation', (): void => {
 
     it.each(generateInvalidStartAndEndTimes())('123', ({ startTime, endTime }): void => {
       const result = validate(schedulesActionConfigWithStartAndEndTime(startTime, endTime));
+      expect(result).toEqual(false);
+    });
+
+    const generateInvalidScheduleTestCases = (): AutoscalingConfig[] => {
+      const testCases: AutoscalingConfig[] = [];
+      const schedules = [
+        'rate(0 minute)', 'rate(0 hour)', 'rate(0 day)',
+        'rate(a minute)', 'rate(b hour)', 'rate(c day)',
+        'rate(11 asd)',
+        'at(205-01-02T12:12:12)', 'at(2000-022-29T23:59:59)', 'at(2000-02-298T23:59:59)', 'at(2000-02-29T232:59:59)', 'at(2000-02-29T23:591:59)', 'at(2000-02-29T23:59:591)',
+        'at(20225-01-02T12:12:12)', 'at(2000-2-29T23:59:59)', 'at(2000-02-2T23:59:59)', 'at(2000-02-29T3:59:59)', 'at(2000-02-29T23:9:59)', 'at(2000-02-29T23:59:5)',
+        'at(2000:02-29T23:59:59)', 'at(2000-02:29T23:59:59)', 'at(2000-02-29T23-59:59)', 'at(2000-02-29T23:59-59)', 'at(2000-02-29Z23:59-59)',
+        'cron(/ / / # / /)', 'cron(/ / 1 L 2 /)', 'cron(/ / L / W /)',
+        'cron(* * ? ? ? *)', 'cron(a 2 3 4 5 6)'
+      ];
+
+      for (const schedule of schedules) {
+        testCases.push(customScheduledActionsConfig([customScheduledAction('name', schedule, { minimum: 1 } as ScalableTargetAction)]));
+      }
+
+      return testCases;
+    };
+
+    it.each(generateInvalidScheduleTestCases())('Negative Schedule Validation', (config: AutoscalingConfig): void => {
+      const result = validate(functionConfig(config));
       expect(result).toEqual(false);
     });
   });
