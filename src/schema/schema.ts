@@ -90,12 +90,13 @@ export const schema = {
                     type: 'string',
                     minLength: 1,
                     oneOf: [{
-                      // todo: singular unit goes with 1; multiple units go with non-1 value
+                      // todo: singular unit goes with 1; plural units go with non-1 value
                       pattern: '^rate\\([1-9]\\d*\\s(minute|minutes|hour|hours|day|days)\\)$'
                     },{
                       // todo: start & end rage for all fields
                       pattern: '^at\\(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\)$'
                     },{
+                      // todo: gazillion more restriction, see AWS docs
                       pattern: '^cron\\((\\d+|/|\\*|,|-|\\d-\\d)\\s(\\d+|/|\\*|,|-|\\d-\\d)\\s(\\d+|/|\\?|L|W|\\*|,|-|\\d-\\d)\\s(\\d+|/|\\*|,|-|\\d-\\d)\\s(\\d+|\\?|\\*|,|-|L|#|\\d-\\d)\\s(\\d+|/|\\*|,|-|\\d-\\d)\\)$'
                     }]
                   },
