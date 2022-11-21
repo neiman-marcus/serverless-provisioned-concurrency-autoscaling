@@ -33,17 +33,18 @@ Add `concurrencyAutoscaling` parameters under each function you wish to autoscal
 
 Add `customMetric: true` if you want to use `Maximum` instead of `Average` statistic.
 
+### Minimal Configuration
 ```yaml
-# minimal configuration
-
 functions:
   hello:
     handler: handler.hello
     provisionedConcurrency: 1
     concurrencyAutoscaling: true
+```
 
-  # full configuration
-
+### Full Configuration
+```yaml
+functions:
   world:
     handler: handler.world
     provisionedConcurrency: 1

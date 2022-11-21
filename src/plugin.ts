@@ -11,6 +11,7 @@ import {
   Options,
   CustomMetricConfig,
 } from './@types'
+import { schema } from './schema/schema';
 
 const text = {
   CLI_DONE: 'Added Provisioned Concurrency Auto Scaling to CloudFormation!',
@@ -20,14 +21,6 @@ const text = {
   INVALID_CONFIG: 'Invalid serverless Config',
   NO_AUTOSCALING_CONFIG: 'Concurrency configuration is missing',
   ONLY_AWS_SUPPORT: 'Only supported for AWS provider',
-}
-
-const schema = {
-  properties: {
-    concurrencyAutoscaling: {
-      anyOf: [{ type: 'boolean' }, { type: 'object' }],
-    },
-  },
 }
 
 export default class Plugin {
