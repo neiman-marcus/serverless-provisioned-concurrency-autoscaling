@@ -138,8 +138,8 @@ export default class Plugin {
 
   validateFunctions(instance: ConcurrencyFunction): boolean {
     return !!(
-      instance.provisionedConcurrency &&
-      instance.provisionedConcurrency > 0 &&
+      instance.provisionedConcurrency && 
+      (typeof instance.provisionedConcurrency ==='number' && instance.provisionedConcurrency > 0 ) &&
       instance.concurrencyAutoscaling &&
       ((typeof instance.concurrencyAutoscaling === 'boolean' &&
         instance.concurrencyAutoscaling) ||
