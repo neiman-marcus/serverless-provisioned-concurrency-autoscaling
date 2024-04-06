@@ -1,10 +1,6 @@
 export const schema = {
   type: 'object',
   properties: {
-    provisionedConcurrency: {
-      type: 'integer',
-      minimum: 1,
-    },
     concurrencyAutoscaling: {
       anyOf: [
         {

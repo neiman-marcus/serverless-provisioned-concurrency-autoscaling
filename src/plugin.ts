@@ -12,6 +12,7 @@ import {
   CustomMetricConfig,
 } from './@types'
 import { schema } from './schema/schema';
+import { log } from '@serverless/utils/log';
 
 const text = {
   CLI_DONE: 'Added Provisioned Concurrency Auto Scaling to CloudFormation!',
@@ -22,6 +23,7 @@ const text = {
   NO_AUTOSCALING_CONFIG: 'Concurrency configuration is missing',
   ONLY_AWS_SUPPORT: 'Only supported for AWS provider',
 }
+
 
 export default class Plugin {
   serverless: Serverless
@@ -100,7 +102,7 @@ export default class Plugin {
       stage: this.serverless.getProvider('aws').getStage(),
     }
 
-    this.serverless.cli.log(util.format(text.CLI_RESOURCE, config.function))
+    log.info(util.format(text.CLI_RESOURCE, config.function))
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const resources: any[] = []
@@ -189,11 +191,11 @@ export default class Plugin {
     try {
       const pcFunctions = this.getFunctions()
       this.validate(pcFunctions)
-      this.serverless.cli.log(util.format(text.CLI_START))
+      log.info(util.format(text.CLI_START))
       this.process(pcFunctions)
-      this.serverless.cli.log(util.format(text.CLI_DONE))
+      log.info(util.format(text.CLI_DONE))
     } catch (err) {
-      this.serverless.cli.log(util.format(text.CLI_SKIP, err.message))
+      log.info(util.format(text.CLI_SKIP, err.message))
     }
   }
 }
