@@ -22,8 +22,9 @@ $ npm install serverless-provisioned-concurrency-autoscaling
 
 Add the plugin to your `serverless.yml`:
 
-Use version 1.9.1 for Serverless 1/ Serverless 2
-Use version 2.0.0 for Serverless 3
+Use version 1.9.1 for Serverless 1/ Serverless 2.
+
+Use version 2.0.0 for Serverless 3.
 
 ```yaml
 plugins:
