@@ -17,7 +17,7 @@ export const serverless: any = {
         package: {},
         memory: 1024,
         timeout: 6,
-        runtime: 'nodejs12.x',
+        runtime: 'nodejs20.x',
         vpc: {},
         versionLogicalId:
           'HelloLambdaVersion0Otd4P0e98XajR4keLBshIyWK1yyxFOZK9AJZD7Wo',
