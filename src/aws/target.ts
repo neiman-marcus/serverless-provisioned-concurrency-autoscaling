@@ -49,7 +49,7 @@ export default class Target {
           ServiceNamespace: 'lambda',
           RoleARN: {
             'Fn::Sub':
-              'arn:aws:iam::#{AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
+              'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
           },
           ScheduledActions: this.data.scheduledActions
             ? this.getSchedulesActions()

@@ -151,6 +151,9 @@ N/A
 
 - [Clay Danford](mailto:crd013@gmail.com)
 - [Dawid Boissé](mailto:dawid.boisse@gmail.com)
+
+## Contributors
+
 - [Vinoth Kumar Chandrasekar](vinothchandra87@gmail.com)
 
 ## Conduct / Contributing / License
@@ -158,6 +161,7 @@ N/A
 - Refer to our contribution guidelines to contribute to this project. See [CONTRIBUTING.md](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/tree/master/CONTRIBUTING.md).
 - All contributions must follow our code of conduct. See [CONDUCT.md](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/tree/master/CONDUCT.md).
 - This project is licensed under the Apache 2.0 license. See [LICENSE](https://github.com/neiman-marcus/serverless-provisioned-concurrency-autoscaling/tree/master/LICENSE).
+
 
 ## Acknowledgments
 
