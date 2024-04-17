@@ -11,7 +11,7 @@ export const expectedTarget = {
       ServiceNamespace: 'lambda',
       RoleARN: {
         'Fn::Sub':
-          'arn:aws:iam::#{AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
+          'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
       },
     },
     Type: 'AWS::ApplicationAutoScaling::ScalableTarget',
@@ -29,7 +29,7 @@ export const expectedTargetWithSingleScheduledAction = {
       ServiceNamespace: 'lambda',
       RoleARN: {
         'Fn::Sub':
-          'arn:aws:iam::#{AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
+          'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
       },
       ScheduledActions: [
         {
@@ -56,7 +56,7 @@ export const expectedTargetWithScheduledActions = {
       ServiceNamespace: 'lambda',
       RoleARN: {
         'Fn::Sub':
-          'arn:aws:iam::#{AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
+          'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/lambda.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_LambdaConcurrency',
       },
       ScheduledActions: [
         {
