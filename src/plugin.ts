@@ -63,8 +63,8 @@ export default class Plugin {
     const alias = config.alias || 'provisioned'
 
     const customMetricConfig: CustomMetricConfig = {
-      metricName: 'ProvisionedConcurrencyUtilization',
-      namespace: 'AWS/Lambda',
+      metricName: config.customMetric?.metricName || 'ProvisionedConcurrencyUtilization',
+      namespace: config.customMetric?.namespace || 'AWS/Lambda',
       statistic: config.customMetric?.statistic || 'Maximum',
       unit: 'Count',
       dimensions: [
