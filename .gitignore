@@ -106,7 +106,6 @@ dist
 # Misc
 .local
 .DS_Store
-lib
 
 # Webstorm files
 .idea
