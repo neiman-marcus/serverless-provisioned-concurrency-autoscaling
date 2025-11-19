@@ -19,6 +19,7 @@
     "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
     "strictNullChecks": true,
+    "skipLibCheck": true,
     // "suppressImplicitAnyIndexErrors": true
   },
   "include": ["src/**/*", "__tests__/**/*"]

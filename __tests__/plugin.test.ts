@@ -18,7 +18,16 @@ import {
 } from './helpers/target'
 import { ConcurrencyFunction } from 'src/@types'
 
-const plugin = new Plugin(serverless)
+const mockLog = {
+  info: jest.fn(),
+  success: jest.fn(),
+  warning: jest.fn(),
+  error: jest.fn(),
+  debug: jest.fn(),
+  notice: jest.fn(),
+}
+
+const plugin = new Plugin(serverless, options, { log: mockLog })
 
 describe('Validate', () => {
   it('should validate true', () => {

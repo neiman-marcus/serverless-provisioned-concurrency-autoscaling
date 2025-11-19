@@ -10,9 +10,9 @@ import {
   ConcurrencyFunction,
   Options,
   CustomMetricConfig,
+  PluginLogger,
 } from './@types'
-import { schema } from './schema/schema';
-import { log } from '@serverless/utils/log';
+import { schema } from './schema/schema'
 
 const text = {
   CLI_DONE: 'Added Provisioned Concurrency Auto Scaling to CloudFormation!',
@@ -24,13 +24,18 @@ const text = {
   ONLY_AWS_SUPPORT: 'Only supported for AWS provider',
 }
 
-
 export default class Plugin {
   serverless: Serverless
+  logger: PluginLogger
   hooks: Record<string, unknown> = {}
 
-  constructor(serverless: Serverless) {
+  constructor(
+    serverless: Serverless,
+    _cliOptions: unknown,
+    { log }: { log: PluginLogger },
+  ) {
     this.serverless = serverless
+    this.logger = log
 
     if (
       this.serverless.configSchemaHandler &&
@@ -102,7 +107,7 @@ export default class Plugin {
       stage: this.serverless.getProvider('aws').getStage(),
     }
 
-    log.info(util.format(text.CLI_RESOURCE, config.function))
+    this.logger.info(util.format(text.CLI_RESOURCE, config.function))
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const resources: any[] = []
@@ -140,8 +145,9 @@ export default class Plugin {
 
   validateFunctions(instance: ConcurrencyFunction): boolean {
     return !!(
-      instance.provisionedConcurrency && 
-      (typeof instance.provisionedConcurrency ==='number' && instance.provisionedConcurrency > 0 ) &&
+      instance.provisionedConcurrency &&
+      typeof instance.provisionedConcurrency === 'number' &&
+      instance.provisionedConcurrency > 0 &&
       instance.concurrencyAutoscaling &&
       ((typeof instance.concurrencyAutoscaling === 'boolean' &&
         instance.concurrencyAutoscaling) ||
@@ -191,11 +197,11 @@ export default class Plugin {
     try {
       const pcFunctions = this.getFunctions()
       this.validate(pcFunctions)
-      log.info(util.format(text.CLI_START))
+      this.logger.info(util.format(text.CLI_START))
       this.process(pcFunctions)
-      log.info(util.format(text.CLI_DONE))
+      this.logger.info(util.format(text.CLI_DONE))
     } catch (err) {
-      log.info(util.format(text.CLI_SKIP, err.message))
+      this.logger.info(util.format(text.CLI_SKIP, err.message))
     }
   }
 }
