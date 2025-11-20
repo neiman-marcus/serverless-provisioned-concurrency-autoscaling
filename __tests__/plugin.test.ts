@@ -11,6 +11,7 @@ import {
 } from './helpers/config'
 import { serverless } from './helpers/serverless'
 import { options } from './helpers/options'
+import { mockLogging } from './helpers/logging'
 import { expectedPolicy } from './helpers/policy'
 import {
   expectedTarget,
@@ -18,7 +19,7 @@ import {
 } from './helpers/target'
 import { ConcurrencyFunction } from 'src/@types'
 
-const plugin = new Plugin(serverless)
+const plugin = new Plugin(serverless, {}, mockLogging)
 
 describe('Validate', () => {
   it('should validate true', () => {
